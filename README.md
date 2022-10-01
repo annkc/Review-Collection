@@ -11,7 +11,7 @@ This could possibly be useful to others, and would also be something that I woul
 have.
 
 ## User Stories
-- As a user, I want to be able to *add a review an arbitrary number of times.*
+- As a user, I want to be able to *add a review to the collection an arbitrary number of times.*
 - As a user, I want to be able to view a list of all my reviews.
 - As a user, I want to be able to delete a review.
 - As a user, I want to be able to be able to include a rating out of 10 in each review.
