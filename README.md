@@ -1,10 +1,12 @@
 # My Personal Project
 
-## A subtitle
+## Project Proposal
+My project will be an app that serves as a collection of reviews. It will allow one to write reviews for any media, 
+from books to movies to video games, including the ability to add ratings to each review alongside a written account in 
+text if one so wishes. One can create and delete as many reviews as one wishes. The reviews can be organised via folders
+and alphabetical order. This app can be used by everyone and anyone who simply wishes to keep all their reviews together 
+in one place and without the use of other applications. I personally very much enjoy keeping note of my thoughts after I
+finish a book or an episode of a show to look back on at a later time, which is where this idea originally stemmed from.
+This could possibly be useful to others, and would also be something that I would personally find to be convenient to 
+have.
 
-A *bulleted* list:
-- item 1
-- item 2
-- item 3
-
-An example of text with **bold** and *italic* fonts.  
