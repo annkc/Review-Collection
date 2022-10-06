@@ -2,24 +2,42 @@ package model;
 
 import java.util.ArrayList;
 
+/*
+ * Represents a review of a piece of media, including the name of the media being
+ * reviewed, the contributors to the media, the title of the review, the body text
+ * of the review, and a rating score out of 10.
+ *
+ */
+
 public class Review {
 
-    private static final int RATING_TOTAL = 10;
+    private static final int RATING_TOTAL = 10;     // total which the review rating is out of
 
-    private String mediaTitle;
-    private ArrayList<String> mediaContributors;
-    private String reviewTitle;
-    private ArrayList<String> reviewText;
-    private int rating;
-    private boolean isRated;
+    private String mediaTitle;                      // title of the media being reviewed
+    private ArrayList<String> mediaContributors;    // names of contributors to the media (eg authors, directors, etc)
+    private String reviewTitle;                     // title of the review
+    private ArrayList<String> reviewText;           // paragraphs that make up body text of the review
+    private int rating;                             // rating of the media out of RATING_TOTAL
 
 
-    public Review() {
-        mediaTitle = "";
-        reviewTitle = "";
-        isRated = false;
+    /*
+     * REQUIRES: mediaTitle.length() > 0 AND reviewTitle.length() > 0
+     * EFFECTS: title of the media being reviewed is set to medTitle;
+     * 		    title of the review is set to revTitle; the rating
+     *          out of the total is set to rating
+     */
+    public Review(String medTitle, String revTitle, int rating) {
+        mediaTitle = medTitle;
+        reviewTitle = revTitle;
+        this.rating = rating;
     }
 
+    /*
+     * REQUIRES: medTitle.length() > 0
+     * MODIFIES: this
+     * EFFECTS: the media's title is set to medTitle
+     *
+     */
     public void setMediaTitle(String medTitle) {
         mediaTitle = medTitle;
     }
@@ -28,6 +46,12 @@ public class Review {
         return mediaTitle;
     }
 
+    /*
+     * REQUIRES: mediaContributor.length() > 0
+     * MODIFIES: this
+     * EFFECTS: the name of a contributor, mediaContributor, of the media being reviewed
+     *          is added to
+     */
     public void addMediaContributor(String mediaContributor) {
         mediaContributors.add(mediaContributor);
     }
@@ -36,6 +60,12 @@ public class Review {
         return mediaContributors;
     }
 
+    /*
+     * REQUIRES: revTitle.length() > 0
+     * MODIFIES: this
+     * EFFECTS: the review title is set to revTitle
+     *
+     */
     public void setReviewTitle(String revTitle) {
         reviewTitle = revTitle;
     }
@@ -44,6 +74,12 @@ public class Review {
         return reviewTitle;
     }
 
+    /*
+     * REQUIRES: paragraph.length() > 0
+     * MODIFIES: this
+     * EFFECTS: adds a paragraph to the body text of the review
+     *
+     */
     public void addParagraphToReviewText(String paragraph) {
         reviewText.add(paragraph);
     }
@@ -53,10 +89,14 @@ public class Review {
     }
 
 
-    // REQUIRES: r >= 0 AND r <= 10
+    /*
+     * REQUIRES: r >= 0 AND r <= 10
+     * MODIFIES: this
+     * EFFECTS: the rating is set to r
+     *
+     */
     public void setRating(int r) {
         rating = r;
-        isRated = true;
     }
 
     public int getRating() {
