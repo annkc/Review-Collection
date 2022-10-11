@@ -38,12 +38,8 @@ public class ReviewCollectionApp {
             userInput = input.nextLine().toLowerCase().trim();
             if (userInput.equals("new")) {
                 newReview();
-            } else if (userInput.equals("edit")) {
-                editReview();
-            } else if (userInput.equals("view")) {
-                viewReview();
-            } else if (userInput.equals("delete")) {
-                deleteReview();
+            } else if (userInput.equals("edit") || userInput.equals("view") || userInput.equals("delete")) {
+                chooseReview(userInput);
             } else if (userInput.equals("quit")) {
                 keepRunning = false;
             } else {
@@ -71,15 +67,15 @@ public class ReviewCollectionApp {
      *          the user to create a new review and add it to the collection
      */
     private void newReview() {
-        System.out.println("Please enter the title of piece of media you would like to review:");
-        String mediaTitle = input.nextLine().toLowerCase().trim();
+        System.out.println("Please enter the title of the work you would like to review:");
+        String workTitle = input.nextLine().trim();
 
         System.out.println("Please enter the title of your review:");
-        String reviewTitle = input.nextLine().toLowerCase().trim();
+        String reviewTitle = input.nextLine().trim();
 
         int rating = handleRatingInput();
 
-        Review toAdd = new Review(mediaTitle, reviewTitle, rating);
+        Review toAdd = new Review(workTitle, reviewTitle, rating);
 
         handleWorkCreatorsAddition(toAdd);
 
@@ -91,28 +87,45 @@ public class ReviewCollectionApp {
     }
 
     /*
+     * REQUIRES: userInput.equals("edit") OR userInput.equals("view") OR
+     * EFFECTS: allows the user to choose a review to act upon
+     *          by showing the choices and processing user input
+     */
+    private void chooseReview(String userInput) {
+        if (collection.getReviewTitlesList().size() == 0) {
+            System.out.println("There are no reviews to " + userInput + ".\n");
+        } else {
+            printReviewList();
+            System.out.println("Please enter the number of the review that you would like to " + userInput + ":");
+            String reviewNumber = input.nextLine().trim();
+            if (Pattern.matches("[0-9]*[0-9]", reviewNumber)) {
+                Review chosenReview = collection.getReviewAt(Integer.parseInt(reviewNumber) - 1);
+                if (chosenReview.equals(null)) {
+                    System.out.println("There is no review numbered '" + reviewNumber + "' in the list.");
+                } else {
+                    if (userInput.equals("edit")) {
+                        editReview(chosenReview);
+                    } else if (userInput.equals("view")) {
+                        printReview(chosenReview);
+                    } else if (userInput.equals("delete")) {
+                        deleteReview(chosenReview);
+                    }
+                }
+            } else {
+                System.out.println("'" + reviewNumber + "' is not a valid number in the list.\n");
+            }
+        }
+    }
+
+    /*
      * MODIFIES: this
      * EFFECTS: receives the user's input and processes it to allow
      *          the user to make edits to an existing review in the collection
      */
-    private void editReview() {
-        if (collection.getReviewTitlesList().size() == 0) {
-            System.out.println("There are no reviews to view.\n");
-        } else {
-            printReviewList();
-            System.out.println("Please enter the number of the review that you would like to edit:");
-            String reviewIndex = input.nextLine().trim();
-            int collectionSize = collection.getReviewTitlesList().size();
-
-            if (Pattern.matches("[0-9]*[0-9]", reviewIndex) && Integer.parseInt(reviewIndex) <= collectionSize) {
-                Review reviewToEdit = collection.getReviewAt(Integer.parseInt(reviewIndex) - 1);
-                System.out.println("What would you like to edit in '" + reviewToEdit.getReviewTitle() + "'?");
-                printEditMenu();
-                handleEditChoice(reviewToEdit);
-            } else {
-                System.out.println("'" + reviewIndex + "' is not a valid number in the list.\n");
-            }
-        }
+    private void editReview(Review review) {
+        System.out.println("What would you like to edit in '" + review.getReviewTitle() + "'?");
+        printEditMenu();
+        handleEditChoice(review);
     }
 
     /*
@@ -120,10 +133,10 @@ public class ReviewCollectionApp {
      */
     private void printEditMenu() {
         System.out.println("To set a new review title, enter 'review title'.");
-        System.out.println("To set a new media title, enter 'media title'.");
+        System.out.println("To set a new work title, enter 'work title'.");
         System.out.println("To choose a new rating, enter 'rating'.");
-        System.out.println("To add new media contributors, enter 'add contributors'.");
-        System.out.println("To completely redo the adding of a media contributors , enter 'reassign contributors'.");
+        System.out.println("To add work creators, enter 'add creators'.");
+        System.out.println("To completely redo the list of work creators, enter 'reassign creators'.");
         System.out.println("To add new paragraphs to the body text, enter 'add paragraph'.");
         System.out.println("To completely rewrite the body text, enter 'rewrite paragraphs'.");
     }
@@ -137,13 +150,13 @@ public class ReviewCollectionApp {
         String userInput = input.nextLine().toLowerCase().trim();
         if (userInput.equals("review title")) {
             review.setReviewTitle(input.nextLine().trim());
-        } else if (userInput.equals("media title")) {
+        } else if (userInput.equals("work title")) {
             review.setWorkTitle(input.nextLine().trim());
         } else if (userInput.equals("rating")) {
             review.setRating(handleRatingInput());
-        } else if (userInput.equals("add contributors")) {
+        } else if (userInput.equals("add creators")) {
             handleWorkCreatorsAddition(review);
-        } else if (userInput.equals("reassign contributors")) {
+        } else if (userInput.equals("reassign creators")) {
             handleWorkCreatorsRedo(review);
         } else if (userInput.equals("add paragraphs")) {
             handleReviewTextAddition(review);
@@ -179,15 +192,16 @@ public class ReviewCollectionApp {
      *          them to add work creators to review
      */
     private void handleWorkCreatorsAddition(Review review) {
-        System.out.println("Please enter contributors to the media one by one and press enter when finished.");
+        System.out.println("Please type and press enter after each work creator.");
+        System.out.println("When finished, press enter without typing anything in that line.");
         boolean keepAdding = true;
-        String contributor;
+        String creator;
         while (keepAdding) {
-            contributor = input.nextLine().trim();
-            if (contributor.equals("")) {
+            creator = input.nextLine().trim();
+            if (creator.equals("")) {
                 keepAdding = false;
             } else {
-                review.addWorkCreator(contributor);
+                review.addWorkCreator(creator);
             }
         }
     }
@@ -198,10 +212,8 @@ public class ReviewCollectionApp {
      *          them to redo the assignment of work creators to review
      */
     private void handleWorkCreatorsRedo(Review review) {
-        for (String contributor : review.getWorkCreators()) {
-            review.removeWorkCreator(contributor);
-        }
-        System.out.println("The existing list of contributors has been deleted.");
+        review.clearWorkCreators();
+        System.out.println("The existing list of creators has been deleted.");
         handleWorkCreatorsAddition(review);
     }
 
@@ -211,7 +223,8 @@ public class ReviewCollectionApp {
      *          them add to the body text of review
      */
     private void handleReviewTextAddition(Review review) {
-        System.out.println("Please enter paragraphs of the review text one by one and press enter when finished.");
+        System.out.println("Please type and press enter after each paragraph of the review text.");
+        System.out.println("When finished, press enter without typing anything in that line.");
         boolean keepAdding = true;
         String paragraph;
         while (keepAdding) {
@@ -230,10 +243,8 @@ public class ReviewCollectionApp {
      *          them to rewrite the body text of review
      */
     private void handleReviewTextRedo(Review review) {
-        for (String paragraph : review.getReviewText()) {
-            review.removeParagraphFromReviewText(paragraph);
-        }
-        System.out.println("The existing body text has been deleted.");
+        review.clearReviewText();
+        System.out.println("The existing body text has been removed.");
         handleReviewTextAddition(review);
     }
 
@@ -251,34 +262,13 @@ public class ReviewCollectionApp {
     }
 
     /*
-     * EFFECTS: receives the user's input and processes it for
-     *          them to choose a review from the collection and view it
-     */
-    private void viewReview() {
-        if (collection.getReviewTitlesList().size() == 0) {
-            System.out.println("There are no reviews to view.\n");
-        } else {
-            printReviewList();
-            boolean reviewFound = false;
-            System.out.println("Please enter the number of the review that you would like to view:");
-            String reviewIndex = input.nextLine().trim();
-            int collectionSize = collection.getReviewTitlesList().size();
-            if (Pattern.matches("[0-9]*[0-9]", reviewIndex) && Integer.parseInt(reviewIndex) <= collectionSize) {
-                printReview(collection.getReviewAt(Integer.parseInt(reviewIndex) - 1));
-            } else {
-                System.out.println("'" + reviewIndex + "' is not a valid number in the list.\n");
-            }
-        }
-    }
-
-    /*
      * EFFECTS: shows the user review in detail, including all of
      *          its elements
      */
     private void printReview(Review review) {
         System.out.println("Review Title: " + review.getReviewTitle());
-        System.out.println("Media Title: " + review.getWorkTitle());
-        System.out.println("Media Contributors: " + review.getWorkCreators());
+        System.out.println("Work Title: " + review.getWorkTitle());
+        System.out.println("Work Creators: " + review.getWorkCreators());
         System.out.println("Rating: " + review.getRating() + "/10");
         for (String paragraph : review.getReviewText()) {
             System.out.println(paragraph);
@@ -289,25 +279,10 @@ public class ReviewCollectionApp {
 
     /*
      * MODIFIES: this
-     * EFFECTS: receives the user's input and processes it for
-     *          them to choose a review from the collection and remove it
-     *          from the collection
+     * EFFECTS: removes review from the collection
      */
-    private void deleteReview() {
-        if (collection.getReviewTitlesList().size() == 0) {
-            System.out.println("There are no reviews to delete.\n");
-        } else {
-            printReviewList();
-            System.out.println("Please enter the number of the review that you would like to delete:");
-            String reviewIndex = input.nextLine().trim();
-            int collectionSize = collection.getReviewTitlesList().size();
-            if (Pattern.matches("[0-9]*[0-9]", reviewIndex) && Integer.parseInt(reviewIndex) <= collectionSize) {
-                Review reviewToRemove = collection.getReviewAt(Integer.parseInt(reviewIndex) - 1);
-                collection.removeReview(reviewToRemove);
-                System.out.println("'" + reviewToRemove.getReviewTitle() + "' has been deleted.\n");
-            } else {
-                System.out.println("'" + reviewIndex + "' is not a valid number in the list.\n");
-            }
-        }
+    private void deleteReview(Review review) {
+        collection.removeReview(review);
+        System.out.println("'" + review.getReviewTitle() + "' has been deleted.\n");
     }
 }

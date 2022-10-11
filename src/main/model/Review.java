@@ -16,14 +16,14 @@ public class Review {
     private String workTitle;                       // title of the work being reviewed
     private ArrayList<String> workCreators;         // names of creators of the work (eg authors, directors, etc)
     private String reviewTitle;                     // title of the review
-    private int rating;                             // rating of the media out of RATING_TOTAL
+    private int rating;                             // rating of the work out of RATING_TOTAL
     private ArrayList<String> reviewText;           // paragraphs that make up body text of the review
 
 
 
     /*
      * REQUIRES: workTitle.length() > 0 AND reviewTitle.length() > 0
-     * EFFECTS: title of the work being reviewed is set to mediaTitle;
+     * EFFECTS: title of the work being reviewed is set to workTitle;
      * 		    title of the review is set to reviewTitle; the rating
      *          out of the total is set to rating
      */
@@ -90,13 +90,11 @@ public class Review {
     }
 
     /*
-     * REQUIRES: workCreator must be an element in the list of creators to the reviewed work
      * MODIFIES: this
-     * EFFECTS: the name of a creator, workCreator, of the work being reviewed
-     *          is removed from the list of creators
+     * EFFECTS: the list of work creators is cleared
      */
-    public void removeWorkCreator(String workCreator) {
-        workCreators.remove(workCreator);
+    public void clearWorkCreators() {
+        workCreators = new ArrayList<>();
     }
 
 
@@ -111,12 +109,11 @@ public class Review {
     }
 
     /*
-     * REQUIRES: paragraph must be a paragraph in the body text
      * MODIFIES: this
-     * EFFECTS: paragraph is removed from the body text of the review
+     * EFFECTS: the review's body text is cleared
      */
-    public void removeParagraphFromReviewText(String mediaContributor) {
-        workCreators.remove(mediaContributor);
+    public void clearReviewText() {
+        reviewText = new ArrayList<>();
     }
 
 }

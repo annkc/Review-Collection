@@ -52,26 +52,30 @@ public class ReviewCollection {
     }
 
     /*
-     * REQUIRES: index >= 0 AND index must be less than the number of reviews in the collection
+     * REQUIRES: index >= 0
      * EFFECTS: returns the review at position index in the collection, counting from 0
      *
      */
     public Review getReviewAt(int index) {
-        return collection.get(index);
+        if (index < collection.size()) {
+            return collection.get(index);
+        } else {
+            return null;
+        }
     }
 
-    /*
-     * EFFECTS: returns index of review with the review title reviewTitle if it is in the
-     *          collection, and returns -1 if it is not in the collection
-     *
-     */
-    public int findReviewIndex(String reviewTitle) {
-        ArrayList<String> reviewTitles = getReviewTitlesList();
-        for (int i = 0; i < reviewTitles.size(); i++) {
-            if (reviewTitle.equals(reviewTitles.get(i))) {
-                return i;
-            }
-        }
-        return -1;
-    }
+//    /*
+//     * EFFECTS: returns index of review with the review title reviewTitle if it is in the
+//     *          collection, and returns -1 if it is not in the collection
+//     *
+//     */
+//    public int findReviewIndex(String reviewTitle) {
+//        ArrayList<String> reviewTitles = getReviewTitlesList();
+//        for (int i = 0; i < reviewTitles.size(); i++) {
+//            if (reviewTitle.equals(reviewTitles.get(i))) {
+//                return i;
+//            }
+//        }
+//        return -1;
+//    }
 }
