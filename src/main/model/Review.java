@@ -16,8 +16,9 @@ public class Review {
     private String mediaTitle;                      // title of the media being reviewed
     private ArrayList<String> mediaContributors;    // names of contributors to the media (eg authors, directors, etc)
     private String reviewTitle;                     // title of the review
-    private ArrayList<String> reviewText;           // paragraphs that make up body text of the review
     private int rating;                             // rating of the media out of RATING_TOTAL
+    private ArrayList<String> reviewText;           // paragraphs that make up body text of the review
+
 
 
     /*
@@ -30,6 +31,8 @@ public class Review {
         mediaTitle = medTitle;
         reviewTitle = revTitle;
         this.rating = rating;
+        mediaContributors = new ArrayList<>();
+        reviewText = new ArrayList<>();
     }
 
     /*
@@ -50,10 +53,20 @@ public class Review {
      * REQUIRES: mediaContributor.length() > 0
      * MODIFIES: this
      * EFFECTS: the name of a contributor, mediaContributor, of the media being reviewed
-     *          is added to
+     *          is added to the list of contributors
      */
     public void addMediaContributor(String mediaContributor) {
         mediaContributors.add(mediaContributor);
+    }
+
+    /*
+     * REQUIRES: mediaContributor must be an element in the list of contributors to the reviewed media
+     * MODIFIES: this
+     * EFFECTS: the name of a contributor, mediaContributor, of the media being reviewed
+     *          is removed from the list of contributors
+     */
+    public void removeMediaContributor(String mediaContributor) {
+        mediaContributors.remove(mediaContributor);
     }
 
     public ArrayList<String> getMediaContributors() {
@@ -102,7 +115,5 @@ public class Review {
     public int getRating() {
         return rating;
     }
-
-
 
 }

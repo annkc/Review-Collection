@@ -6,7 +6,6 @@ public class ReviewCollection {
 
     private ArrayList<Review> collection; // a list of the reviews in the collection
 
-
     /*
      * EFFECTS: sets the list of reviews in collections as an empty list of reviews
      *
@@ -29,15 +28,17 @@ public class ReviewCollection {
      * REQUIRES: revTitle must be the title of a review in the collection
      * MODIFIES: this
      * EFFECTS: removes the review with the title revTitle from the collection
+     *          if there is such a review, and returns whether the removal was successful
      *
      */
-    public void deleteReview(String revTitle) {
+    public boolean deleteReview(String revTitle) {
         for (int i = 0; i < collection.size(); i++) {
             if (revTitle.equals(collection.get(i).getReviewTitle())) {
                 collection.remove(i);
-                break;
+                return true;
             }
         }
+        return false;
     }
 
     /*
