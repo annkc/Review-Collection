@@ -100,17 +100,17 @@ public class ReviewCollectionApp {
             System.out.println("There are no reviews to view.\n");
         } else {
             printReviewList();
-            System.out.println("Please enter the title of the review that you would like to edit:");
-            String reviewTitle = input.nextLine().trim();
-            int reviewIndex = collection.findReviewIndex(reviewTitle);
+            System.out.println("Please enter the number of the review that you would like to edit:");
+            String reviewIndex = input.nextLine().trim();
+            int collectionSize = collection.getReviewTitlesList().size();
 
-            if (reviewIndex >= 0) {
-                Review reviewToEdit = collection.getReviewAt(reviewIndex);
+            if (Pattern.matches("[0-9]*[0-9]", reviewIndex) && Integer.parseInt(reviewIndex) <= collectionSize) {
+                Review reviewToEdit = collection.getReviewAt(Integer.parseInt(reviewIndex) - 1);
                 System.out.println("What would you like to edit in '" + reviewToEdit.getReviewTitle() + "'?");
                 printEditMenu();
                 handleEditChoice(reviewToEdit);
             } else {
-                System.out.println("There is no review with the title " + reviewTitle + ".\n");
+                System.out.println("'" + reviewIndex + "' is not a valid number in the list.\n");
             }
         }
     }
@@ -260,14 +260,13 @@ public class ReviewCollectionApp {
         } else {
             printReviewList();
             boolean reviewFound = false;
-            System.out.println("Please enter the title of the review that you would like to view:");
-            String reviewTitle = input.nextLine().trim();
-            int reviewIndex = collection.findReviewIndex(reviewTitle);
-
-            if (reviewIndex >= 0) {
-                printReview(collection.getReviewAt(reviewIndex));
+            System.out.println("Please enter the number of the review that you would like to view:");
+            String reviewIndex = input.nextLine().trim();
+            int collectionSize = collection.getReviewTitlesList().size();
+            if (Pattern.matches("[0-9]*[0-9]", reviewIndex) && Integer.parseInt(reviewIndex) <= collectionSize) {
+                printReview(collection.getReviewAt(Integer.parseInt(reviewIndex) - 1));
             } else {
-                System.out.println("There is no review with the title " + reviewTitle + ".\n");
+                System.out.println("'" + reviewIndex + "' is not a valid number in the list.\n");
             }
         }
     }
@@ -295,17 +294,20 @@ public class ReviewCollectionApp {
      *          from the collection
      */
     private void deleteReview() {
-        printReviewList();
-        System.out.println("Please enter the number of the review that you would like to remove:");
-        String reviewIndex = input.nextLine().trim();
-        int collectionSize = collection.getReviewTitlesList().size();
-        if (Pattern.matches("[0-9]*[0-9]", reviewIndex) && Integer.parseInt(reviewIndex) <= collectionSize) {
-            Review reviewToRemove = collection.getReviewAt(Integer.parseInt(reviewIndex) - 1);
-            collection.removeReview(reviewToRemove);
-            System.out.println(reviewToRemove.getReviewTitle() + " has been removed.\n");
+        if (collection.getReviewTitlesList().size() == 0) {
+            System.out.println("There are no reviews to delete.\n");
         } else {
-            System.out.println("'" + reviewIndex + "' is not a valid number in the list.\n");
+            printReviewList();
+            System.out.println("Please enter the number of the review that you would like to delete:");
+            String reviewIndex = input.nextLine().trim();
+            int collectionSize = collection.getReviewTitlesList().size();
+            if (Pattern.matches("[0-9]*[0-9]", reviewIndex) && Integer.parseInt(reviewIndex) <= collectionSize) {
+                Review reviewToRemove = collection.getReviewAt(Integer.parseInt(reviewIndex) - 1);
+                collection.removeReview(reviewToRemove);
+                System.out.println("'" + reviewToRemove.getReviewTitle() + "' has been deleted.\n");
+            } else {
+                System.out.println("'" + reviewIndex + "' is not a valid number in the list.\n");
+            }
         }
-
     }
 }
