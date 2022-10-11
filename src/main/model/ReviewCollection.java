@@ -25,20 +25,13 @@ public class ReviewCollection {
     }
 
     /*
-     * REQUIRES: revTitle must be the title of a review in the collection
+     * REQUIRES: index must be less than the number of reviews in the
      * MODIFIES: this
-     * EFFECTS: removes the review with the title revTitle from the collection
-     *          if there is such a review, and returns whether the removal was successful
+     * EFFECTS: removes the review at position index, counting from zero,
      *
      */
-    public boolean deleteReview(String revTitle) {
-        for (int i = 0; i < collection.size(); i++) {
-            if (revTitle.equals(collection.get(i).getReviewTitle())) {
-                collection.remove(i);
-                return true;
-            }
-        }
-        return false;
+    public void removeReview(Review review) {
+        collection.remove(review);
     }
 
     /*
@@ -56,10 +49,25 @@ public class ReviewCollection {
 
     /*
      * REQUIRES: i >= 0 AND i must be less than the number of reviews in the collection
-     * EFFECTS: returns the review at position i in the list of reviews
+     * EFFECTS: returns the review at position i in the list of reviews, counting from 0
      *
      */
     public Review getReviewAt(int i) {
         return collection.get(i);
+    }
+
+    /*
+     * EFFECTS: returns index of review with the review title reviewTitle if it is in the
+     *          collection, and returns -1 if it is not in the collection
+     *
+     */
+    public int findReview(String reviewTitle) {
+        ArrayList<String> reviewTitles = getReviewTitlesList();
+        for (int i = 0; i < reviewTitles.size(); i++) {
+            if (reviewTitle.equals(reviewTitles.get(i))) {
+                return i;
+            }
+        }
+        return -1;
     }
 }

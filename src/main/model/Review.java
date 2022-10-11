@@ -35,19 +35,55 @@ public class Review {
         reviewText = new ArrayList<>();
     }
 
-    /*
-     * REQUIRES: medTitle.length() > 0
-     * MODIFIES: this
-     * EFFECTS: the media's title is set to medTitle
-     *
-     */
-    public void setMediaTitle(String medTitle) {
-        mediaTitle = medTitle;
-    }
+
+
 
     public String getMediaTitle() {
         return mediaTitle;
     }
+
+    public ArrayList<String> getMediaContributors() {
+        return mediaContributors;
+    }
+
+    public String getReviewTitle() {
+        return reviewTitle;
+    }
+
+    public ArrayList<String> getReviewText() {
+        return reviewText;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+
+
+    public void setMediaTitle(String medTitle) {
+        mediaTitle = medTitle;
+    }
+
+    /*
+     * REQUIRES: revTitle.length() > 0
+     * MODIFIES: this
+     * EFFECTS: the review title is set to revTitle
+     *
+     */
+    public void setReviewTitle(String revTitle) {
+        reviewTitle = revTitle;
+    }
+
+    /*
+     * REQUIRES: r >= 0 AND r <= 10
+     * MODIFIES: this
+     * EFFECTS: the rating is set to r
+     *
+     */
+    public void setRating(int r) {
+        rating = r;
+    }
+
 
     /*
      * REQUIRES: mediaContributor.length() > 0
@@ -69,23 +105,6 @@ public class Review {
         mediaContributors.remove(mediaContributor);
     }
 
-    public ArrayList<String> getMediaContributors() {
-        return mediaContributors;
-    }
-
-    /*
-     * REQUIRES: revTitle.length() > 0
-     * MODIFIES: this
-     * EFFECTS: the review title is set to revTitle
-     *
-     */
-    public void setReviewTitle(String revTitle) {
-        reviewTitle = revTitle;
-    }
-
-    public String getReviewTitle() {
-        return reviewTitle;
-    }
 
     /*
      * REQUIRES: paragraph.length() > 0
@@ -97,23 +116,6 @@ public class Review {
         reviewText.add(paragraph);
     }
 
-    public ArrayList<String> getReviewText() {
-        return reviewText;
-    }
 
-
-    /*
-     * REQUIRES: r >= 0 AND r <= 10
-     * MODIFIES: this
-     * EFFECTS: the rating is set to r
-     *
-     */
-    public void setRating(int r) {
-        rating = r;
-    }
-
-    public int getRating() {
-        return rating;
-    }
 
 }

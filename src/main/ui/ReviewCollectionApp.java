@@ -3,7 +3,7 @@ package ui;
 import model.Review;
 import model.ReviewCollection;
 
-import java.util.ArrayList;
+import java.util.regex.*;
 import java.util.Scanner;
 
 public class ReviewCollectionApp {
@@ -29,8 +29,8 @@ public class ReviewCollectionApp {
             userInput = input.nextLine().toLowerCase().trim();
             if (userInput.equals("new")) {
                 newReview();
-//            } else if (userInput.equals("edit")) {
-//                editReview();
+            } else if (userInput.equals("edit")) {
+                editReview();
             } else if (userInput.equals("view")) {
                 viewReview();
             } else if (userInput.equals("delete")) {
@@ -78,11 +78,7 @@ public class ReviewCollectionApp {
         while (!canProceed) {
             System.out.println("Please enter a rating out of ten (whole numbers only):");
             ratingInput = input.nextLine().toLowerCase().trim();
-            if (ratingInput.length() == 1) {
-                canProceed = Character.isDigit(ratingInput.charAt(0));
-            } else if (ratingInput.length() == 2) {
-                canProceed = ratingInput.equals("10");
-            }
+            canProceed = Pattern.matches("(10)|([0-9])", ratingInput);
             if (!canProceed) {
                 System.out.println("'" + ratingInput + "' is not a valid rating.");
             }
@@ -124,31 +120,45 @@ public class ReviewCollectionApp {
         for (String title : collection.getReviewTitlesList()) {
             System.out.println(position + ": " + title);
         }
+        System.out.println();
     }
 
-//    private void editReview() {
-//
-//    }
+    private void editReview() {
+        printReviewList();
+        System.out.println("Please enter the title of the review that you would like to edit:");
+        String reviewTitle = input.nextLine().trim();
+        int reviewIndex = collection.findReview(reviewTitle);
+
+        if (reviewIndex >= 0) {
+            Review reviewToEdit = collection.getReviewAt(reviewIndex);
+            System.out.println("What would you like to edit in '" + reviewToEdit.getReviewTitle() + "'?");
+            printEditMenu();
+        } else {
+            System.out.println("There is no review with the title " + reviewTitle + ".\n");
+        }
+    }
+
+    private void printEditMenu() {
+        System.out.println("To set a new review title, enter 'review title'.");
+        System.out.println("To set a new media title, enter 'media title'.");
+        System.out.println("To add a new media contributor, enter 'add contributor'.");
+        System.out.println("To remove a media contributor, enter 'remove contributor'.");
+        System.out.println("To add a new paragraph to the body text, enter 'add paragraph'.");
+        System.out.println("To remove a paragraph from the body text, enter 'remove paragraph'.");
+    }
 
     private void viewReview() {
         if (collection.getReviewTitlesList().size() == 0) {
             System.out.println("There are no reviews to view.\n");
         } else {
             printReviewList();
-            Review reviewToView = null;
             boolean reviewFound = false;
             System.out.println("Please enter the title of the review that you would like to view:");
             String reviewTitle = input.nextLine().trim();
-            ArrayList<String> reviewTitles = collection.getReviewTitlesList();
-            for (int i = 0; i < reviewTitles.size(); i++) {
-                if (reviewTitle.equals(reviewTitles.get(i))) {
-                    reviewFound = true;
-                    reviewToView = collection.getReviewAt(i);
-                    break;
-                }
-            }
-            if (reviewFound) {
-                printReview(reviewToView);
+            int reviewIndex = collection.findReview(reviewTitle);
+
+            if (reviewIndex >= 0) {
+                printReview(collection.getReviewAt(reviewIndex));
             } else {
                 System.out.println("There is no review with the title " + reviewTitle + ".\n");
             }
@@ -169,12 +179,15 @@ public class ReviewCollectionApp {
 
     private void deleteReview() {
         printReviewList();
-        System.out.println("Please enter the title of the review that you would like to remove:");
-        String reviewTitle = input.nextLine().trim();
-        if (collection.deleteReview(reviewTitle)) {
-            System.out.println(reviewTitle + " has been removed.\n");
+        System.out.println("Please enter the number of the review that you would like to remove:");
+        String reviewIndex = input.nextLine().trim();
+        int collectionSize = collection.getReviewTitlesList().size();
+        if (Pattern.matches("[0-9]*[0-9]", reviewIndex) && Integer.parseInt(reviewIndex) <= collectionSize) {
+            Review reviewToRemove = collection.getReviewAt(Integer.parseInt(reviewIndex) - 1);
+            collection.removeReview(reviewToRemove);
+            System.out.println(reviewToRemove.getReviewTitle() + " has been removed.\n");
         } else {
-            System.out.println("There is no review with the title " + reviewTitle + ".\n");
+            System.out.println("'" + reviewIndex + "' is not a valid number in the list.\n");
         }
 
     }

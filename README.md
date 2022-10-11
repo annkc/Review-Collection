@@ -11,9 +11,9 @@ also be something that I would personally find to be convenient to have.
 
 ## User Stories
 - As a user, I want to be able to title my reviews.
-- As a user, I want to be able to specify the name of the reviewed work and its creator(s).
+- As a user, I want to be able to specify the name of the reviewed work and an arbitrary number of creator(s).
 - As a user, I want to be able to be able to include a rating out of 10 in each review.
-- As a user, I want to be able to include body text in each review.
+- As a user, I want to be able to add paragraphs of body text in each review an arbitrary number of times.
 - As a user, I want to be able to *add a review to the collection an arbitrary number of times.*
 - As a user, I want to be able to delete a review.
 - As a user, I want to be able to view a list of all my reviews.
