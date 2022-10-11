@@ -77,6 +77,7 @@ public class ReviewCollectionApp {
     private void printEditMenu() {
         System.out.println("To set a new review title, enter 'review title'.");
         System.out.println("To set a new media title, enter 'media title'.");
+        System.out.println("To choose a new rating, enter 'rating'.");
         System.out.println("To add new media contributors, enter 'add contributors'.");
         System.out.println("To completely redo the adding of a media contributors , enter 'reassign contributors'.");
         System.out.println("To add new paragraphs to the body text, enter 'add paragraph'.");
@@ -86,9 +87,11 @@ public class ReviewCollectionApp {
     private void handleEditChoice(Review review) {
         String userInput = input.nextLine().toLowerCase().trim();
         if (userInput.equals("review title")) {
-            review.setReviewTitle(userInput);
+            review.setReviewTitle(input.nextLine().trim());
         } else if (userInput.equals("media title")) {
-            review.setMediaTitle(userInput);
+            review.setMediaTitle(input.nextLine().trim());
+        } else if (userInput.equals("rating")) {
+            review.setRating(handleRatingInput());
         } else if (userInput.equals("add contributors")) {
             handleMediaContributorsAddition(review);
         } else if (userInput.equals("reassign contributors")) {
