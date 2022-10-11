@@ -53,4 +53,13 @@ public class ReviewCollection {
 
         return titleList;
     }
+
+    /*
+     * REQUIRES: i >= 0 AND i must be less than the number of reviews in the collection
+     * EFFECTS: returns the review at position i in the list of reviews
+     *
+     */
+    public Review getReviewAt(int i) {
+        return collection.get(i);
+    }
 }
