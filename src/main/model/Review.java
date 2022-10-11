@@ -3,8 +3,8 @@ package model;
 import java.util.ArrayList;
 
 /*
- * Represents a review of a piece of media, including the name of the media being
- * reviewed, the contributors to the media, the title of the review, the body text
+ * Represents a review of a work, including the name of the work being
+ * reviewed, the creators of the work, the title of the review, the body text
  * of the review, and a rating score out of 10.
  *
  */
@@ -13,8 +13,8 @@ public class Review {
 
     private static final int RATING_TOTAL = 10;     // total which the review rating is out of
 
-    private String mediaTitle;                      // title of the media being reviewed
-    private ArrayList<String> mediaContributors;    // names of contributors to the media (eg authors, directors, etc)
+    private String workTitle;                       // title of the work being reviewed
+    private ArrayList<String> workCreators;         // names of creators of the work (eg authors, directors, etc)
     private String reviewTitle;                     // title of the review
     private int rating;                             // rating of the media out of RATING_TOTAL
     private ArrayList<String> reviewText;           // paragraphs that make up body text of the review
@@ -22,28 +22,28 @@ public class Review {
 
 
     /*
-     * REQUIRES: mediaTitle.length() > 0 AND reviewTitle.length() > 0
-     * EFFECTS: title of the media being reviewed is set to medTitle;
-     * 		    title of the review is set to revTitle; the rating
+     * REQUIRES: workTitle.length() > 0 AND reviewTitle.length() > 0
+     * EFFECTS: title of the work being reviewed is set to mediaTitle;
+     * 		    title of the review is set to reviewTitle; the rating
      *          out of the total is set to rating
      */
-    public Review(String medTitle, String revTitle, int rating) {
-        mediaTitle = medTitle;
-        reviewTitle = revTitle;
+    public Review(String workTitle, String reviewTitle, int rating) {
+        this.workTitle = workTitle;
+        this.reviewTitle = reviewTitle;
         this.rating = rating;
-        mediaContributors = new ArrayList<>();
+        workCreators = new ArrayList<>();
         reviewText = new ArrayList<>();
     }
 
 
 
 
-    public String getMediaTitle() {
-        return mediaTitle;
+    public String getWorkTitle() {
+        return workTitle;
     }
 
-    public ArrayList<String> getMediaContributors() {
-        return mediaContributors;
+    public ArrayList<String> getWorkCreators() {
+        return workCreators;
     }
 
     public String getReviewTitle() {
@@ -60,16 +60,10 @@ public class Review {
 
 
 
-    public void setMediaTitle(String medTitle) {
-        mediaTitle = medTitle;
+    public void setWorkTitle(String medTitle) {
+        workTitle = medTitle;
     }
 
-    /*
-     * REQUIRES: revTitle.length() > 0
-     * MODIFIES: this
-     * EFFECTS: the review title is set to revTitle
-     *
-     */
     public void setReviewTitle(String revTitle) {
         reviewTitle = revTitle;
     }
@@ -86,23 +80,23 @@ public class Review {
 
 
     /*
-     * REQUIRES: mediaContributor.length() > 0
+     * REQUIRES: workCreator.length() > 0
      * MODIFIES: this
-     * EFFECTS: the name of a contributor, mediaContributor, of the media being reviewed
-     *          is added to the list of contributors
+     * EFFECTS: the name of a creator, workCreator, of the work being reviewed
+     *          is added to the list of creators
      */
-    public void addMediaContributor(String mediaContributor) {
-        mediaContributors.add(mediaContributor);
+    public void addWorkCreator(String workCreator) {
+        workCreators.add(workCreator);
     }
 
     /*
-     * REQUIRES: mediaContributor must be an element in the list of contributors to the reviewed media
+     * REQUIRES: workCreator must be an element in the list of creators to the reviewed work
      * MODIFIES: this
-     * EFFECTS: the name of a contributor, mediaContributor, of the media being reviewed
-     *          is removed from the list of contributors
+     * EFFECTS: the name of a creator, workCreator, of the work being reviewed
+     *          is removed from the list of creators
      */
-    public void removeMediaContributor(String mediaContributor) {
-        mediaContributors.remove(mediaContributor);
+    public void removeWorkCreator(String workCreator) {
+        workCreators.remove(workCreator);
     }
 
 
@@ -122,7 +116,7 @@ public class Review {
      * EFFECTS: paragraph is removed from the body text of the review
      */
     public void removeParagraphFromReviewText(String mediaContributor) {
-        mediaContributors.remove(mediaContributor);
+        workCreators.remove(mediaContributor);
     }
 
 }

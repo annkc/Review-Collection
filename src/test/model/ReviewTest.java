@@ -14,17 +14,22 @@ class ReviewTest {
     }
 
     @Test
-    void testAddMediaContributor() {
+    void testAddWorkCreator() {
 
     }
 
     @Test
-    void testRemoveMediaContributor() {
+    void testRemoveWorkCreator() {
 
     }
 
     @Test
     void testAddParagraphToReviewText() {
+
+    }
+
+    @Test
+    void testRemoveParagraphFromReviewText() {
 
     }
 
