@@ -3,6 +3,7 @@ package ui;
 import model.Review;
 import model.ReviewCollection;
 
+import java.util.ArrayList;
 import java.util.regex.*;
 import java.util.Scanner;
 
@@ -37,6 +38,8 @@ public class ReviewCollectionApp {
                 deleteReview();
             } else if (userInput.equals("quit")) {
                 keepRunning = false;
+            } else {
+                System.out.println("That is not a valid choice.\n");
             }
         }
         System.out.println("Until next time!");
@@ -50,7 +53,6 @@ public class ReviewCollectionApp {
         System.out.println("To delete an existing review, enter 'delete'.");
         System.out.println("To quit and exit, enter 'quit'.");
     }
-
 
     private void newReview() {
         System.out.println("Please enter the title of piece of media you would like to review:");
@@ -70,6 +72,34 @@ public class ReviewCollectionApp {
         collection.addReview(toAdd);
 
         System.out.println("Review created and added to your collection!\n");
+    }
+
+    private void printEditMenu() {
+        System.out.println("To set a new review title, enter 'review title'.");
+        System.out.println("To set a new media title, enter 'media title'.");
+        System.out.println("To add new media contributors, enter 'add contributors'.");
+        System.out.println("To completely redo the adding of a media contributors , enter 'reassign contributors'.");
+        System.out.println("To add new paragraphs to the body text, enter 'add paragraph'.");
+        System.out.println("To completely rewrite the body text, enter 'rewrite paragraphs'.");
+    }
+
+    private void handleEditChoice(Review review) {
+        String userInput = input.nextLine().toLowerCase().trim();
+        if (userInput.equals("review title")) {
+            review.setReviewTitle(userInput);
+        } else if (userInput.equals("media title")) {
+            review.setMediaTitle(userInput);
+        } else if (userInput.equals("add contributors")) {
+            handleMediaContributorsAddition(review);
+        } else if (userInput.equals("reassign contributors")) {
+            handleMediaContributorsRedo(review);
+        } else if (userInput.equals("add paragraphs")) {
+            handleReviewTextAddition(review);
+        } else if (userInput.equals("rewrite paragraphs")) {
+            handleReviewTextRedo(review);
+        } else {
+            System.out.println("That is not a valid choice.\n");
+        }
     }
 
     private int handleRatingInput() {
@@ -100,6 +130,14 @@ public class ReviewCollectionApp {
         }
     }
 
+    private void handleMediaContributorsRedo(Review r) {
+        for (String contributor : r.getMediaContributors()) {
+            r.removeMediaContributor(contributor);
+        }
+        System.out.println("The existing list of contributors has been deleted.");
+        handleMediaContributorsAddition(r);
+    }
+
     private void handleReviewTextAddition(Review r) {
         System.out.println("Please enter paragraphs of the review text one by one and press enter when finished.");
         boolean keepAdding = true;
@@ -114,6 +152,14 @@ public class ReviewCollectionApp {
         }
     }
 
+    private void handleReviewTextRedo(Review r) {
+        for (String paragraph : r.getReviewText()) {
+            r.removeParagraphFromReviewText(paragraph);
+        }
+        System.out.println("The existing body text has been deleted.");
+        handleReviewTextAddition(r);
+    }
+
     private void printReviewList() {
         System.out.println("Here is the list of your reviews:");
         int position = 1;
@@ -124,27 +170,23 @@ public class ReviewCollectionApp {
     }
 
     private void editReview() {
-        printReviewList();
-        System.out.println("Please enter the title of the review that you would like to edit:");
-        String reviewTitle = input.nextLine().trim();
-        int reviewIndex = collection.findReview(reviewTitle);
-
-        if (reviewIndex >= 0) {
-            Review reviewToEdit = collection.getReviewAt(reviewIndex);
-            System.out.println("What would you like to edit in '" + reviewToEdit.getReviewTitle() + "'?");
-            printEditMenu();
+        if (collection.getReviewTitlesList().size() == 0) {
+            System.out.println("There are no reviews to view.\n");
         } else {
-            System.out.println("There is no review with the title " + reviewTitle + ".\n");
-        }
-    }
+            printReviewList();
+            System.out.println("Please enter the title of the review that you would like to edit:");
+            String reviewTitle = input.nextLine().trim();
+            int reviewIndex = collection.findReview(reviewTitle);
 
-    private void printEditMenu() {
-        System.out.println("To set a new review title, enter 'review title'.");
-        System.out.println("To set a new media title, enter 'media title'.");
-        System.out.println("To add a new media contributor, enter 'add contributor'.");
-        System.out.println("To remove a media contributor, enter 'remove contributor'.");
-        System.out.println("To add a new paragraph to the body text, enter 'add paragraph'.");
-        System.out.println("To remove a paragraph from the body text, enter 'remove paragraph'.");
+            if (reviewIndex >= 0) {
+                Review reviewToEdit = collection.getReviewAt(reviewIndex);
+                System.out.println("What would you like to edit in '" + reviewToEdit.getReviewTitle() + "'?");
+                printEditMenu();
+                handleEditChoice(reviewToEdit);
+            } else {
+                System.out.println("There is no review with the title " + reviewTitle + ".\n");
+            }
+        }
     }
 
     private void viewReview() {
@@ -169,7 +211,7 @@ public class ReviewCollectionApp {
         System.out.println("Review Title: " + review.getReviewTitle());
         System.out.println("Media Title: " + review.getMediaTitle());
         System.out.println("Media Contributors: " + review.getMediaContributors());
-        System.out.println("Rating: " + review.getRating() + " /10");
+        System.out.println("Rating: " + review.getRating() + "/10");
         for (String paragraph : review.getReviewText()) {
             System.out.println(paragraph);
         }

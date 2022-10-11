@@ -116,6 +116,13 @@ public class Review {
         reviewText.add(paragraph);
     }
 
-
+    /*
+     * REQUIRES: paragraph must be a paragraph in the body text
+     * MODIFIES: this
+     * EFFECTS: paragraph is removed from the body text of the review
+     */
+    public void removeParagraphFromReviewText(String mediaContributor) {
+        mediaContributors.remove(mediaContributor);
+    }
 
 }
