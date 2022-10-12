@@ -63,19 +63,4 @@ public class ReviewCollection {
             return null;
         }
     }
-
-//    /*
-//     * EFFECTS: returns index of review with the review title reviewTitle if it is in the
-//     *          collection, and returns -1 if it is not in the collection
-//     *
-//     */
-//    public int findReviewIndex(String reviewTitle) {
-//        ArrayList<String> reviewTitles = getReviewTitlesList();
-//        for (int i = 0; i < reviewTitles.size(); i++) {
-//            if (reviewTitle.equals(reviewTitles.get(i))) {
-//                return i;
-//            }
-//        }
-//        return -1;
-//    }
 }

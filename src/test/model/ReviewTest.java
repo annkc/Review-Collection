@@ -21,6 +21,7 @@ class ReviewTest {
         review.addWorkCreator("Maxwell Perkins");
         assertEquals("F. Scott Fitzgerald", review.getWorkCreators().get(0));
         assertEquals("Maxwell Perkins", review.getWorkCreators().get(1));
+        assertEquals(2, review.getWorkCreators().size());
 
         review.clearWorkCreators();
         assertEquals(0, review.getWorkCreators().size());
