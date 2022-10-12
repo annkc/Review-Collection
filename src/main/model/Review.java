@@ -11,19 +11,19 @@ import java.util.ArrayList;
 
 public class Review {
 
-    private static final int RATING_TOTAL = 10;     // total which the review rating is out of
+    public static final int RATING_TOTAL = 10;     // total which the review rating is out of
 
     private String workTitle;                       // title of the work being reviewed
-    private ArrayList<String> workCreators;         // names of creators of the work (eg authors, directors, etc)
+    private ArrayList<String> workCreators;         // names of creators of the work (eg. authors, directors, etc)
     private String reviewTitle;                     // title of the review
-    private int rating;                             // rating of the work out of RATING_TOTAL
+    private int rating;                             // whole number rating of the work out of RATING_TOTAL
     private ArrayList<String> reviewText;           // paragraphs that make up body text of the review
 
 
 
     /*
      * REQUIRES: workTitle.length() > 0 AND reviewTitle.length() > 0
-     * EFFECTS: title of the work being reviewed is set to workTitle;
+     * EFFECTS: title of the work being reviewed is set to  workTitle;
      * 		    title of the review is set to reviewTitle; the rating
      *          out of the total is set to rating
      */
@@ -69,9 +69,9 @@ public class Review {
     }
 
     /*
-     * REQUIRES: r >= 0 AND r <= 10
+     * REQUIRES: r >= 0 AND r <= and RATING_TOTAL
      * MODIFIES: this
-     * EFFECTS: the rating is set to r
+     * EFFECTS: the rating is set to r out of RATING_TOTAL
      *
      */
     public void setRating(int r) {

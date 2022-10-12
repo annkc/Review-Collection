@@ -98,9 +98,9 @@ public class ReviewCollectionApp {
             printReviewList();
             System.out.println("Please enter the number of the review that you would like to " + userInput + ":");
             String reviewNumber = input.nextLine().trim();
-            if (Pattern.matches("[0-9]*[0-9]", reviewNumber)) {
+            if (Pattern.matches("[0-9]+", reviewNumber)) {
                 Review chosenReview = collection.getReviewAt(Integer.parseInt(reviewNumber) - 1);
-                if (chosenReview.equals(null)) {
+                if (chosenReview == null) {
                     System.out.println("There is no review numbered '" + reviewNumber + "' in the list.");
                 } else {
                     if (userInput.equals("edit")) {
@@ -112,7 +112,7 @@ public class ReviewCollectionApp {
                     }
                 }
             } else {
-                System.out.println("'" + reviewNumber + "' is not a valid number in the list.\n");
+                System.out.println("'" + reviewNumber + "' is not a valid list number.\n");
             }
         }
     }
@@ -178,7 +178,7 @@ public class ReviewCollectionApp {
         while (!canProceed) {
             System.out.println("Please enter a rating out of ten (whole numbers only):");
             ratingInput = input.nextLine().toLowerCase().trim();
-            canProceed = Pattern.matches("(10)|([0-9])", ratingInput);
+            canProceed = Pattern.matches("[0-9]+", ratingInput) && Integer.parseInt(ratingInput) < Review.RATING_TOTAL;
             if (!canProceed) {
                 System.out.println("'" + ratingInput + "' is not a valid rating.");
             }
@@ -269,7 +269,7 @@ public class ReviewCollectionApp {
         System.out.println("Review Title: " + review.getReviewTitle());
         System.out.println("Work Title: " + review.getWorkTitle());
         System.out.println("Work Creators: " + review.getWorkCreators());
-        System.out.println("Rating: " + review.getRating() + "/10");
+        System.out.println("Rating: " + review.getRating() + "/" + Review.RATING_TOTAL);
         for (String paragraph : review.getReviewText()) {
             System.out.println(paragraph);
         }
