@@ -45,5 +45,17 @@ class ReviewTest {
 
     }
 
+    @Test
+    void testSetters() {
+        review.setReviewTitle("My favourite book");
+        review.setRating(10);
+        review.setWorkTitle("Watchmen");
+
+        assertEquals("My favourite book", review.getReviewTitle());
+        assertEquals(10, review.getRating());
+        assertEquals("Watchmen", review.getWorkTitle());
+
+    }
+
 
 }
