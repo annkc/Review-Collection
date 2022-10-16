@@ -3,8 +3,6 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -15,12 +13,12 @@ public class ReviewCollectionTest {
     private Review review2 = new Review("Persona 5", "The game I have wanted to play", 9);
 
     @BeforeEach
-    void runBefore() {
+    public void runBefore() {
         collection = new ReviewCollection();
     }
 
     @Test
-    void testAddingAndRemovingReviews() {
+    public void testAddingAndRemovingReviews() {
         collection.addReview(review2);
         assertEquals(review2, collection.getReviewAt(0));
         assertEquals(1, collection.getReviewTitlesList().size());
@@ -30,7 +28,7 @@ public class ReviewCollectionTest {
     }
 
     @Test
-    void testGetReviewTitlesList() {
+    public void testGetReviewTitlesList() {
         collection.addReview(review1);
         collection.addReview(review2);
 
@@ -40,7 +38,7 @@ public class ReviewCollectionTest {
     }
 
     @Test
-    void testGetReviewAt() {
+    public void testGetReviewAt() {
         collection.addReview(review1);
         collection.addReview(review2);
 

@@ -3,20 +3,18 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class ReviewTest {
     private Review review;
 
     @BeforeEach
-    void runBefore() {
+    public void runBefore() {
         review = new Review("The Great Gatsby", "The Great Gatsby left me wondering why I read it.", 5);
     }
 
     @Test
-    void testAddingAndClearingWorkCreators() {
+    public void testAddingAndClearingWorkCreators() {
         review.addWorkCreator("F. Scott Fitzgerald");
         review.addWorkCreator("Maxwell Perkins");
         assertEquals("F. Scott Fitzgerald", review.getWorkCreators().get(0));
@@ -28,7 +26,7 @@ class ReviewTest {
     }
 
     @Test
-    void testAddingAndClearingReviewText() {
+    public void testAddingAndClearingReviewText() {
         String paragraph1 = "I knew of the Great Gatsby before I had to read it.";
         String paragraph2 = "I can't say that I would have read it if not for school.";
         String paragraph3 = "I can't say I enjoyed i. It wasn't bad, but it wasn't good.";
@@ -46,7 +44,7 @@ class ReviewTest {
     }
 
     @Test
-    void testSetters() {
+    public void testSetters() {
         review.setReviewTitle("My favourite book");
         review.setRating(10);
         review.setWorkTitle("Watchmen");
