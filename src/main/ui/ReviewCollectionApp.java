@@ -126,9 +126,8 @@ public class ReviewCollectionApp {
     }
 
     /*
-     * REQUIRES: (userInput.equals("edit") OR userInput.equals("view") OR userInput.equals("delete"))
-     *           AND (review must be a review in the collection)
-     * MODIFIES: this
+     * REQUIRES: userInput.equals("edit") OR userInput.equals("view") OR userInput.equals("delete")
+     * MODIFIES: this AND review
      * EFFECTS: processes the given userInput and based on it,
      *          allows the user to edit, view, or delete chosenReview
      */
@@ -143,11 +142,9 @@ public class ReviewCollectionApp {
     }
 
     /*
-     * REQUIRES: review must be a review in the collection
-     * MODIFIES: this
-     * EFFECTS: receives the user's input and processes it to allow
-     *          the user choose which edits to make to an existing review in the collection
-     *          and then enact them
+     * MODIFIES: review
+     * EFFECTS: gives the user choices in edits to make on an existing review
+     *          then processes and carries out their choice
      */
     private void editReview(Review review) {
         System.out.println("What would you like to edit in '" + review.getReviewTitle() + "'?");
@@ -169,8 +166,7 @@ public class ReviewCollectionApp {
     }
 
     /*
-     * REQUIRES: review must be a review in the collection
-     * MODIFIES: this
+     * MODIFIES: review
      * EFFECTS: takes in user input and processes it for
      *          them to choose an editing option to make on an existing review
      *          and then carry it out
@@ -217,8 +213,7 @@ public class ReviewCollectionApp {
     }
 
     /*
-     * REQUIRES: review must be a review in the collection
-     * MODIFIES: this
+     * MODIFIES: review
      * EFFECTS: takes in user input for them to add work creators to review
      */
     private void handleWorkCreatorsAddition(Review review) {
@@ -237,8 +232,7 @@ public class ReviewCollectionApp {
     }
 
     /*
-     * REQUIRES: review must be a review in the collection
-     * MODIFIES: this
+     * MODIFIES: review
      * EFFECTS: clears out the list of work creators in review, then
      *          takes in user input for them to add new work creators to review
      */
@@ -249,8 +243,7 @@ public class ReviewCollectionApp {
     }
 
     /*
-     * REQUIRES: review must be a review in the collection
-     * MODIFIES: this
+     * MODIFIES: review
      * EFFECTS: takes in user input for them to add to the body text of review
      */
     private void handleReviewTextAddition(Review review) {
@@ -269,8 +262,7 @@ public class ReviewCollectionApp {
     }
 
     /*
-     * REQUIRES: review must be a review in the collection
-     * MODIFIES: this
+     * MODIFIES: review
      * EFFECTS: clears out the list of work creators in review, then
      *          takes in user input for them to add to the body text of review
      */
@@ -294,7 +286,6 @@ public class ReviewCollectionApp {
     }
 
     /*
-     * REQUIRES: review must be a review in the collection
      * EFFECTS: shows the user review in detail, including all of
      *          its elements
      */
