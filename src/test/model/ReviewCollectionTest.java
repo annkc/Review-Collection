@@ -31,6 +31,8 @@ public class ReviewCollectionTest {
 
     @Test
     public void testGetReviewTitlesList() {
+        assertEquals(0, collection.getReviewTitlesList().size());
+
         collection.addReview(review1);
         collection.addReview(review2);
 

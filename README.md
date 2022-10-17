@@ -17,3 +17,4 @@ also be something that I would personally find to be convenient to have.
 - As a user, I want to be able to *add a review to the collection an arbitrary number of times.*
 - As a user, I want to be able to delete a review.
 - As a user, I want to be able to view a list of all my reviews.
+- As a user, I want to be able to edit my reviews.
