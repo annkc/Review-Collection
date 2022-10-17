@@ -9,12 +9,14 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ReviewCollectionTest {
 
     private ReviewCollection collection;
-    private Review review1 = new Review("The Great Gatsby", "The Great Gatsby left me wondering why I read it.", 5);
-    private Review review2 = new Review("Persona 5", "The game I have wanted to play", 9);
+    private Review review1;
+    private Review review2;
 
     @BeforeEach
     public void runBefore() {
         collection = new ReviewCollection();
+        review1 = new Review("The Great Gatsby", "The Great Gatsby left me wondering why I read it.", 5);
+        review2 = new Review("Persona 5", "The game I have wanted to play", 9);
     }
 
     @Test
