@@ -16,7 +16,7 @@ public class ReviewCollectionApp {
     private ReviewCollection collection;
 
     /*
-     * EFFECTS: the review collection to start running
+     * EFFECTS: has the review collection start running
      */
     public ReviewCollectionApp() {
         runReviewCollectionApp();
@@ -24,29 +24,20 @@ public class ReviewCollectionApp {
 
     /*
      * MODIFIES: this
-     * EFFECTS: receives the user's input and processes it for
-     *          them to choose an option from the main menu
+     * EFFECTS: setup and keeps the application running
+     *          until the user has chosen to quit
      */
     private void runReviewCollectionApp() {
         input = new Scanner(System.in);
-        boolean keepRunning = true;
         collection = new ReviewCollection();
-        String userInput;
+
+        boolean keepRunning = true;
 
         while (keepRunning) {
             printMainMenu();
-            userInput = input.nextLine().toLowerCase().trim();
-            if (userInput.equals("new")) {
-                newReview();
-            } else if (userInput.equals("edit") || userInput.equals("view") || userInput.equals("delete")) {
-                chooseReview(userInput);
-            } else if (userInput.equals("quit")) {
-                keepRunning = false;
-            } else {
-                System.out.println("That is not a valid choice.\n");
-            }
+            keepRunning = handleMainMenuChoice();
         }
-        System.out.println("Until next time!");
+        System.out.println("\nUntil next time!");
     }
 
     /*
@@ -63,7 +54,28 @@ public class ReviewCollectionApp {
 
     /*
      * MODIFIES: this
-     * EFFECTS: receives the user's input and processes it to allow
+     * EFFECTS: takes in the user's input and processes it for
+     *          them to choose an option from the main menu,
+     *          returns false if the user chooses to quit,
+     *          returns true otherwise
+     */
+    private boolean handleMainMenuChoice() {
+        String userInput = input.nextLine().toLowerCase().trim();
+        if (userInput.equals("new")) {
+            newReview();
+        } else if (userInput.equals("edit") || userInput.equals("view") || userInput.equals("delete")) {
+            chooseReview(userInput);
+        } else if (userInput.equals("quit")) {
+            return false;
+        } else {
+            System.out.println("That is not a valid choice.\n");
+        }
+        return true;
+    }
+
+    /*
+     * MODIFIES: this
+     * EFFECTS: takes in the user's input and processes it for
      *          the user to create a new review and add it to the collection
      */
     private void newReview() {
@@ -87,9 +99,11 @@ public class ReviewCollectionApp {
     }
 
     /*
-     * REQUIRES: userInput.equals("edit") OR userInput.equals("view") OR
-     * EFFECTS: allows the user to choose a review to act upon
-     *          by showing the choices and processing user input
+     * REQUIRES: userInput.equals("edit") OR userInput.equals("view") OR userInput.equals("delete")
+     * MODIFIES: this
+     * EFFECTS: shows the list of existing reviews,
+     *          takes in user input and processes it for user to choose an existing review
+     *          and either edit, view, or delete it
      */
     private void chooseReview(String userInput) {
         if (collection.getReviewTitlesList().size() == 0) {
@@ -103,13 +117,7 @@ public class ReviewCollectionApp {
                 if (chosenReview == null) {
                     System.out.println("There is no review numbered '" + reviewNumber + "' in the list.");
                 } else {
-                    if (userInput.equals("edit")) {
-                        editReview(chosenReview);
-                    } else if (userInput.equals("view")) {
-                        printReview(chosenReview);
-                    } else if (userInput.equals("delete")) {
-                        deleteReview(chosenReview);
-                    }
+                    handleExistingReviewChoice(userInput, chosenReview);
                 }
             } else {
                 System.out.println("'" + reviewNumber + "' is not a valid list number.\n");
@@ -118,18 +126,37 @@ public class ReviewCollectionApp {
     }
 
     /*
+     * REQUIRES: (userInput.equals("edit") OR userInput.equals("view") OR userInput.equals("delete"))
+     *           AND (review must be a review in the collection)
+     * MODIFIES: this
+     * EFFECTS: processes the given userInput and based on it,
+     *          allows the user to edit, view, or delete chosenReview
+     */
+    private void handleExistingReviewChoice(String userInput, Review review) {
+        if (userInput.equals("edit")) {
+            editReview(review);
+        } else if (userInput.equals("view")) {
+            printReview(review);
+        } else if (userInput.equals("delete")) {
+            deleteReview(review);
+        }
+    }
+
+    /*
+     * REQUIRES: review must be a review in the collection
      * MODIFIES: this
      * EFFECTS: receives the user's input and processes it to allow
-     *          the user to make edits to an existing review in the collection
+     *          the user choose which edits to make to an existing review in the collection
+     *          and then enact them
      */
     private void editReview(Review review) {
         System.out.println("What would you like to edit in '" + review.getReviewTitle() + "'?");
         printEditMenu();
-        handleEditChoice(review);
+        handleEditMenuChoice(review);
     }
 
     /*
-     * EFFECTS: shows the user the editing choices they can make in the editing menu
+     * EFFECTS: shows the user the editing choices they can make to an existing review
      */
     private void printEditMenu() {
         System.out.println("To set a new review title, enter 'review title'.");
@@ -137,20 +164,24 @@ public class ReviewCollectionApp {
         System.out.println("To choose a new rating, enter 'rating'.");
         System.out.println("To add work creators, enter 'add creators'.");
         System.out.println("To completely redo the list of work creators, enter 'reassign creators'.");
-        System.out.println("To add new paragraphs to the body text, enter 'add paragraph'.");
+        System.out.println("To add new paragraphs to the body text, enter 'add paragraphs'.");
         System.out.println("To completely rewrite the body text, enter 'rewrite paragraphs'.");
     }
 
     /*
+     * REQUIRES: review must be a review in the collection
      * MODIFIES: this
-     * EFFECTS: receives the user's input and processes it for
-     *          them to choose an option from the editing menu
+     * EFFECTS: takes in user input and processes it for
+     *          them to choose an editing option to make on an existing review
+     *          and then carry it out
      */
-    private void handleEditChoice(Review review) {
+    private void handleEditMenuChoice(Review review) {
         String userInput = input.nextLine().toLowerCase().trim();
         if (userInput.equals("review title")) {
+            System.out.println("Please enter the new review title:");
             review.setReviewTitle(input.nextLine().trim());
         } else if (userInput.equals("work title")) {
+            System.out.println("Please enter the new work title:");
             review.setWorkTitle(input.nextLine().trim());
         } else if (userInput.equals("rating")) {
             review.setRating(handleRatingInput());
@@ -168,9 +199,8 @@ public class ReviewCollectionApp {
     }
 
     /*
-     * MODIFIES: this
-     * EFFECTS: receives the user's input and processes it to
-     *          get a number for a review's rating
+     * EFFECTS: takes in user input and checks it until it is
+     *          a valid rating, then returns the rating
      */
     private int handleRatingInput() {
         String ratingInput = "";
@@ -178,7 +208,7 @@ public class ReviewCollectionApp {
         while (!canProceed) {
             System.out.println("Please enter a rating out of ten (whole numbers only):");
             ratingInput = input.nextLine().toLowerCase().trim();
-            canProceed = Pattern.matches("[0-9]+", ratingInput) && Integer.parseInt(ratingInput) < Review.RATING_TOTAL;
+            canProceed = Pattern.matches("[0-9]+", ratingInput) && Integer.parseInt(ratingInput) <= Review.RATING_TOTAL;
             if (!canProceed) {
                 System.out.println("'" + ratingInput + "' is not a valid rating.");
             }
@@ -187,9 +217,9 @@ public class ReviewCollectionApp {
     }
 
     /*
+     * REQUIRES: review must be a review in the collection
      * MODIFIES: this
-     * EFFECTS: receives the user's input and processes it for
-     *          them to add work creators to review
+     * EFFECTS: takes in user input for them to add work creators to review
      */
     private void handleWorkCreatorsAddition(Review review) {
         System.out.println("Please type and press enter after each work creator.");
@@ -207,9 +237,10 @@ public class ReviewCollectionApp {
     }
 
     /*
+     * REQUIRES: review must be a review in the collection
      * MODIFIES: this
-     * EFFECTS: receives the user's input and processes it for
-     *          them to redo the assignment of work creators to review
+     * EFFECTS: clears out the list of work creators in review, then
+     *          takes in user input for them to add new work creators to review
      */
     private void handleWorkCreatorsRedo(Review review) {
         review.clearWorkCreators();
@@ -218,9 +249,9 @@ public class ReviewCollectionApp {
     }
 
     /*
+     * REQUIRES: review must be a review in the collection
      * MODIFIES: this
-     * EFFECTS: receives the user's input and processes it for
-     *          them add to the body text of review
+     * EFFECTS: takes in user input for them to add to the body text of review
      */
     private void handleReviewTextAddition(Review review) {
         System.out.println("Please type and press enter after each paragraph of the review text.");
@@ -238,9 +269,10 @@ public class ReviewCollectionApp {
     }
 
     /*
+     * REQUIRES: review must be a review in the collection
      * MODIFIES: this
-     * EFFECTS: receives the user's input and processes it for
-     *          them to rewrite the body text of review
+     * EFFECTS: clears out the list of work creators in review, then
+     *          takes in user input for them to add to the body text of review
      */
     private void handleReviewTextRedo(Review review) {
         review.clearReviewText();
@@ -262,6 +294,7 @@ public class ReviewCollectionApp {
     }
 
     /*
+     * REQUIRES: review must be a review in the collection
      * EFFECTS: shows the user review in detail, including all of
      *          its elements
      */
@@ -278,6 +311,7 @@ public class ReviewCollectionApp {
     }
 
     /*
+     * REQUIRES: review must be a review in the collection
      * MODIFIES: this
      * EFFECTS: removes review from the collection
      */
