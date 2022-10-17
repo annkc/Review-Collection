@@ -18,7 +18,7 @@ public class ReviewCollectionTest {
     }
 
     @Test
-    public void testAddingAndRemovingReviews() {
+    public void testAddingThenRemovingAReview() {
         collection.addReview(review2);
         assertEquals(review2, collection.getReviewAt(0));
         assertEquals(1, collection.getReviewTitlesList().size());

@@ -14,7 +14,7 @@ class ReviewTest {
     }
 
     @Test
-    public void testAddingAndClearingWorkCreators() {
+    public void testAddingThenClearingWorkCreators() {
         review.addWorkCreator("F. Scott Fitzgerald");
         review.addWorkCreator("Maxwell Perkins");
         assertEquals("F. Scott Fitzgerald", review.getWorkCreators().get(0));
@@ -26,7 +26,7 @@ class ReviewTest {
     }
 
     @Test
-    public void testAddingAndClearingReviewText() {
+    public void testAddingThenClearingReviewText() {
         String paragraph1 = "I knew of the Great Gatsby before I had to read it.";
         String paragraph2 = "I can't say that I would have read it if not for school.";
         String paragraph3 = "I can't say I enjoyed i. It wasn't bad, but it wasn't good.";
