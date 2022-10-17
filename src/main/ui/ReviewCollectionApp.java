@@ -8,6 +8,8 @@ import java.util.Scanner;
 
 /*
  * Represents the review collection application.
+ *
+ * Referenced TellerApp class in the TellerApp project
  */
 
 public class ReviewCollectionApp {
