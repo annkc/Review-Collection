@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 /*
  * Represents a collection of an arbitrary number of reviews.
- *
  */
 
 public class ReviewCollection {
@@ -13,7 +12,6 @@ public class ReviewCollection {
 
     /*
      * EFFECTS: sets the list of reviews in the collection to an empty list
-     *
      */
     public ReviewCollection() {
         collection = new ArrayList<>();
@@ -22,7 +20,6 @@ public class ReviewCollection {
     /*
      * MODIFIES: this
      * EFFECTS: adds a review at the end of the list of reviews in the collection
-     *
      */
     public void addReview(Review review) {
         collection.add(review);
@@ -32,15 +29,13 @@ public class ReviewCollection {
      * REQUIRES: review must be a review in the collection
      * MODIFIES: this
      * EFFECTS: removes review from the collection
-     *
      */
     public void removeReview(Review review) {
         collection.remove(review);
     }
 
     /*
-     * EFFECTS: returns a list of the titles of all the review in the collection
-     *
+     * EFFECTS: returns a list of the titles of all the reviews in the collection
      */
     public ArrayList<String> getReviewTitlesList() {
         ArrayList<String> titleList =  new ArrayList<>();
@@ -53,8 +48,8 @@ public class ReviewCollection {
 
     /*
      * REQUIRES: index >= 0
-     * EFFECTS: returns the review at position index in the collection, counting from 0
-     *
+     * EFFECTS: if there is a review at position index in the collection, counting from 0,
+     *          returns that review, otherwise returns null
      */
     public Review getReviewAt(int index) {
         if (index < collection.size()) {

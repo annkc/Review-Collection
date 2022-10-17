@@ -6,12 +6,11 @@ import java.util.ArrayList;
  * Represents a review of a work, including the name of the work being
  * reviewed, the creators of the work, the title of the review, the body text
  * of the review, and a rating score out of 10.
- *
  */
 
 public class Review {
 
-    public static final int RATING_TOTAL = 10;     // total which the review rating is out of
+    public static final int RATING_TOTAL = 10;      // total which the review rating is out of
 
     private String workTitle;                       // title of the work being reviewed
     private ArrayList<String> workCreators;         // names of creators of the work (eg. authors, directors, etc)
@@ -22,7 +21,6 @@ public class Review {
 
 
     /*
-     * REQUIRES: workTitle.length() > 0 AND reviewTitle.length() > 0
      * EFFECTS: title of the work being reviewed is set to  workTitle;
      * 		    title of the review is set to reviewTitle; the rating
      *          out of the total is set to rating
@@ -34,9 +32,6 @@ public class Review {
         workCreators = new ArrayList<>();
         reviewText = new ArrayList<>();
     }
-
-
-
 
     public String getWorkTitle() {
         return workTitle;
@@ -58,8 +53,6 @@ public class Review {
         return rating;
     }
 
-
-
     public void setWorkTitle(String medTitle) {
         workTitle = medTitle;
     }
@@ -71,13 +64,11 @@ public class Review {
     /*
      * REQUIRES: r >= 0 AND r <= and RATING_TOTAL
      * MODIFIES: this
-     * EFFECTS: the rating is set to r out of RATING_TOTAL
-     *
+     * EFFECTS: the rating is set to r
      */
     public void setRating(int r) {
         rating = r;
     }
-
 
     /*
      * REQUIRES: workCreator.length() > 0
@@ -96,7 +87,6 @@ public class Review {
     public void clearWorkCreators() {
         workCreators = new ArrayList<>();
     }
-
 
     /*
      * REQUIRES: paragraph.length() > 0

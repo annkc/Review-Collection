@@ -44,7 +44,7 @@ public class ReviewCollectionApp {
      * EFFECTS: shows the user the choices they can make in the main menu
      */
     private void printMainMenu() {
-        System.out.println("Welcome to your review collection. What would you like to do?");
+        System.out.println("\nWelcome to your review collection. What would you like to do?");
         System.out.println("To create a new review, enter 'new'.");
         System.out.println("To edit an existing review, enter 'edit'.");
         System.out.println("To view your review, enter 'view'.");
@@ -159,7 +159,7 @@ public class ReviewCollectionApp {
      * EFFECTS: shows the user the editing choices they can make to an existing review
      */
     private void printEditMenu() {
-        System.out.println("To set a new review title, enter 'review title'.");
+        System.out.println("\nTo set a new review title, enter 'review title'.");
         System.out.println("To set a new work title, enter 'work title'.");
         System.out.println("To choose a new rating, enter 'rating'.");
         System.out.println("To add work creators, enter 'add creators'.");
