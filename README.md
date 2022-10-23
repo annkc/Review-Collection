@@ -10,6 +10,8 @@ at a later time, which is where this idea originally stemmed from. This could po
 also be something that I would personally find to be convenient to have.
 
 ## User Stories
+- As a user, I want to be able to save my review collection to file.
+- As a user, I want to be able to be able to load my review collection from file.
 - As a user, I want to be able to title my reviews.
 - As a user, I want to be able to specify the name of the reviewed work and an arbitrary number of creator(s).
 - As a user, I want to be able to be able to include a rating out of 10 in each review.
