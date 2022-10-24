@@ -59,14 +59,9 @@ public class ReviewCollectionTest {
     public void testToJsonObject() {
         JSONObject jsonObject = collection.toJsonObject();
 
-        assertEquals(collection.collectionReviewsToJsonArray(), jsonObject.get("reviews"));
-    }
-
-    @Test
-    public void testCollectionReviewsToJsonArray() {
-        JSONArray jsonArray = collection.collectionReviewsToJsonArray();
+        JSONArray listOfReviewsJson = jsonObject.getJSONArray("reviews");
         int index = 0;
-        for (Object json : jsonArray) {
+        for (Object json : listOfReviewsJson) {
             assertEquals(collection.getReviewAt(index).toJsonObject(), json);
             index++;
         }

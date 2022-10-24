@@ -76,7 +76,7 @@ public class ReviewCollection implements WritableToJson {
     /*
      * EFFECTS: returns reviews in the review collection as a JSON array
      */
-    public JSONArray collectionReviewsToJsonArray() {
+    private JSONArray collectionReviewsToJsonArray() {
         JSONArray jsonArray = new JSONArray();
 
         for (Review r : collection) {
