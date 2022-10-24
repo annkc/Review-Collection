@@ -1,5 +1,6 @@
 package model;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.WritableToJson;
 
@@ -9,6 +10,8 @@ import java.util.ArrayList;
  * Represents a review of a work, including the name of the work being
  * reviewed, the creators of the work, the title of the review, the body text
  * of the review, and a rating score out of 10.
+ *
+ * (Referenced the WorkRoom class in the JsonSerializationDemo project)
  */
 
 public class Review implements WritableToJson {
@@ -111,7 +114,43 @@ public class Review implements WritableToJson {
 
     @Override
     public JSONObject toJsonObject() {
-        return null;
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("work title", workTitle);
+        jsonObject.put("review title", reviewTitle);
+        jsonObject.put("rating", rating);
+        jsonObject.put("work creators", workCreatorsToJsonArray());
+        jsonObject.put("review text", reviewTextToJsonArray());
+
+        return jsonObject;
+    }
+
+
+    /*
+     * EFFECTS: returns work creators in the review as a JSON array
+     */
+    private JSONArray workCreatorsToJsonArray() {
+        JSONArray jsonArray = new JSONArray();
+        for (String wc : workCreators) {
+            JSONObject jsonObjectToAdd = new JSONObject();
+            jsonObjectToAdd.put("name", wc);
+            jsonArray.put(jsonObjectToAdd);
+        }
+
+        return jsonArray;
+    }
+
+    /*
+     * EFFECTS: returns review text in the review as a JSON array
+     */
+    private JSONArray reviewTextToJsonArray() {
+        JSONArray jsonArray = new JSONArray();
+        for (String paragraph : reviewText) {
+            JSONObject jsonObjectToAdd = new JSONObject();
+            jsonObjectToAdd.put("paragraph", paragraph);
+            jsonArray.put(jsonObjectToAdd);
+        }
+
+        return jsonArray;
     }
 
 }
