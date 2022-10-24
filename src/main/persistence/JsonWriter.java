@@ -8,7 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
 // Represents a writer that writes JSON representation of a review collection to file
-// (Referenced the JsonWriter Class in the JsonSerializationDemo project)
+// (Referenced the JsonWriter class in the JsonSerializationDemo project)
 public class JsonWriter {
 
     private static final int NUM_TAB_SPACES = 4; // the number of spaces that a tab is made up of

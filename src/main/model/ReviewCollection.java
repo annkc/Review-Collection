@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 /*
  * Represents a collection of an arbitrary number of reviews.
+ *
+ * (Referenced the WorkRoom class in the JsonSerializationDemo project)
  */
 
 public class ReviewCollection implements WritableToJson {
@@ -66,12 +68,22 @@ public class ReviewCollection implements WritableToJson {
 
     @Override
     public JSONObject toJsonObject() {
-        return null;
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("reviews", collectionReviewsToJsonArray());
+        return jsonObject;
     }
 
-
+    /*
+     * EFFECTS: returns reviews in the review collection as a JSON array
+     */
     private JSONArray collectionReviewsToJsonArray() {
-        return null;
+        JSONArray jsonArray = new JSONArray();
+
+        for (Review r : collection) {
+            jsonArray.put(r.toJsonObject());
+        }
+
+        return jsonArray;
     }
 
 }

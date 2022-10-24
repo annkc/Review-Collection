@@ -12,7 +12,7 @@ import java.nio.file.Paths;
 import java.util.stream.Stream;
 
 // Represents a reader that reads JSON data on file for review collection
-// (Referenced the JsonReader Class in the JsonSerializationDemo project)
+// (Referenced the JsonReader class in the JsonSerializationDemo project)
 public class JsonReader {
 
     private String sourceFilePath;
@@ -51,7 +51,7 @@ public class JsonReader {
     // MODIFIES: collection
     // EFFECTS: parses reviews from jsonObject, then adds the reviews to collection
     private void addReviews(ReviewCollection collection, JSONObject jsonObject) {
-        JSONArray jsonArray = jsonObject.getJSONArray("collection");
+        JSONArray jsonArray = jsonObject.getJSONArray("reviews");
         for (Object object : jsonArray) {
             JSONObject nextReviewJson = (JSONObject) object;
             addReview(collection, nextReviewJson);
