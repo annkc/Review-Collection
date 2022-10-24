@@ -1,12 +1,16 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.WritableToJson;
+
 import java.util.ArrayList;
 
 /*
  * Represents a collection of an arbitrary number of reviews.
  */
 
-public class ReviewCollection {
+public class ReviewCollection implements WritableToJson {
 
     private ArrayList<Review> collection; // a list of the reviews in the collection
 
@@ -58,4 +62,16 @@ public class ReviewCollection {
             return null;
         }
     }
+
+
+    @Override
+    public JSONObject toJsonObject() {
+        return null;
+    }
+
+
+    private JSONArray collectionReviewsToJsonArray() {
+        return null;
+    }
+
 }

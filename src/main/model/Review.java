@@ -1,5 +1,8 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.WritableToJson;
+
 import java.util.ArrayList;
 
 /*
@@ -8,7 +11,7 @@ import java.util.ArrayList;
  * of the review, and a rating score out of 10.
  */
 
-public class Review {
+public class Review implements WritableToJson {
 
     public static final int RATING_TOTAL = 10;      // total which the review rating is out of
 
@@ -104,6 +107,11 @@ public class Review {
      */
     public void clearReviewText() {
         reviewText = new ArrayList<>();
+    }
+
+    @Override
+    public JSONObject toJsonObject() {
+        return null;
     }
 
 }
