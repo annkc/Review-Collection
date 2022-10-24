@@ -47,7 +47,7 @@ public class JsonWriterTest {
     public void testWriterNotEmptyReviewCollection() {
         try {
             ReviewCollection collection = new ReviewCollection();
-            JsonWriter writer = new JsonWriter("./data/testWriterEmptyReviewCollection.json");
+            JsonWriter writer = new JsonWriter("./data/testWriterNotEmptyReviewCollection.json");
             Review review = new Review("Love Story", "I Once Knew This Song", 7);
             review.addWorkCreator("Taylor Swift");
             review.addParagraphToReviewText("but not anymore. I've forgotten most of the lyrics");
@@ -57,7 +57,7 @@ public class JsonWriterTest {
             writer.write(collection);
             writer.close();
 
-            JsonReader reader = new JsonReader("./data/testWriterEmptyReviewCollection.json");
+            JsonReader reader = new JsonReader("./data/testWriterNotEmptyReviewCollection.json");
             collection = reader.read();
             assertEquals(1, collection.getReviewTitlesList().size());
             Review readReview = collection.getReviewAt(0);
