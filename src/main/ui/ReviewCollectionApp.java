@@ -2,20 +2,29 @@ package ui;
 
 import model.Review;
 import model.ReviewCollection;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.regex.*;
 import java.util.Scanner;
 
 /*
  * Represents the review collection application.
  *
- * Referenced TellerApp class in the TellerApp project
+ * (Referenced TellerApp class in the TellerApp project)
+ * (Referenced the WorkRoomApp Class in the JsonSerializationDemo project)
  */
 
 public class ReviewCollectionApp {
 
+    private static final String JSON_FILE_PATHNAME = "./data/reviewcollection.json";
+
     private Scanner input;
     private ReviewCollection collection;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     /*
      * EFFECTS: has the review collection start running
@@ -31,6 +40,8 @@ public class ReviewCollectionApp {
      */
     private void runReviewCollectionApp() {
         input = new Scanner(System.in);
+        jsonWriter = new JsonWriter(JSON_FILE_PATHNAME);
+        jsonReader = new JsonReader(JSON_FILE_PATHNAME);
         collection = new ReviewCollection();
 
         boolean keepRunning = true;
@@ -51,13 +62,15 @@ public class ReviewCollectionApp {
         System.out.println("To edit an existing review, enter 'edit'.");
         System.out.println("To view your review, enter 'view'.");
         System.out.println("To delete an existing review, enter 'delete'.");
+        System.out.println("To save your current collection, enter 'save'.");
+        System.out.println("To load an existing collection, enter 'load'.");
         System.out.println("To quit and exit, enter 'quit'.");
     }
 
     /*
      * MODIFIES: this
      * EFFECTS: takes in the user's input and processes it for
-     *          them to choose an option from the main menu,
+     *          them to choose an option from the main menu, then enacts the choice
      *          returns false if the user chooses to quit,
      *          returns true otherwise
      */
@@ -67,6 +80,10 @@ public class ReviewCollectionApp {
             newReview();
         } else if (userInput.equals("edit") || userInput.equals("view") || userInput.equals("delete")) {
             chooseReview(userInput);
+        } else if (userInput.equals("save")) {
+            saveReviewCollection();
+        } else if (userInput.equals("load")) {
+            loadReviewCollection();
         } else if (userInput.equals("quit")) {
             return false;
         } else {
@@ -311,5 +328,33 @@ public class ReviewCollectionApp {
     private void deleteReview(Review review) {
         collection.removeReview(review);
         System.out.println("'" + review.getReviewTitle() + "' has been deleted.\n");
+    }
+
+    /*
+     * EFFECTS: saves the review collection to file
+     */
+    private void saveReviewCollection() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(collection);
+            jsonWriter.close();
+            System.out.println("Your collection has been saved at: " + JSON_FILE_PATHNAME);
+        } catch (FileNotFoundException e) {
+            System.out.println("Cannot write to file at: " + JSON_FILE_PATHNAME);
+        }
+    }
+
+    /*
+     * MODIFIES: this
+     * EFFECTS: loads the review collection from file
+     */
+    private void loadReviewCollection() {
+        try {
+            collection = jsonReader.read();
+            System.out.println("Your collection has been loaded from: " + JSON_FILE_PATHNAME);
+        } catch (IOException e) {
+            System.out.println("Cannot read from file at: " + JSON_FILE_PATHNAME);
+        }
+
     }
 }
