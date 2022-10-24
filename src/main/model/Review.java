@@ -128,7 +128,7 @@ public class Review implements WritableToJson {
     /*
      * EFFECTS: returns work creators in the review as a JSON array
      */
-    private JSONArray workCreatorsToJsonArray() {
+    public JSONArray workCreatorsToJsonArray() {
         JSONArray jsonArray = new JSONArray();
         for (String wc : workCreators) {
             JSONObject jsonObjectToAdd = new JSONObject();
@@ -142,7 +142,7 @@ public class Review implements WritableToJson {
     /*
      * EFFECTS: returns review text in the review as a JSON array
      */
-    private JSONArray reviewTextToJsonArray() {
+    public JSONArray reviewTextToJsonArray() {
         JSONArray jsonArray = new JSONArray();
         for (String paragraph : reviewText) {
             JSONObject jsonObjectToAdd = new JSONObject();

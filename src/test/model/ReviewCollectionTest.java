@@ -1,5 +1,7 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -49,6 +51,25 @@ public class ReviewCollectionTest {
         assertEquals(review1, collection.getReviewAt(0));
         assertEquals(review2, collection.getReviewAt(1));
         assertEquals(null, collection.getReviewAt(2));
+
+    }
+
+
+    @Test
+    public void testToJsonObject() {
+        JSONObject jsonObject = collection.toJsonObject();
+
+        assertEquals(collection.collectionReviewsToJsonArray(), jsonObject.get("reviews"));
+    }
+
+    @Test
+    public void testCollectionReviewsToJsonArray() {
+        JSONArray jsonArray = collection.collectionReviewsToJsonArray();
+        int index = 0;
+        for (Object json : jsonArray) {
+            assertEquals(collection.getReviewAt(index).toJsonObject(), json);
+            index++;
+        }
 
     }
 
