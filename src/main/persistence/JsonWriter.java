@@ -14,12 +14,12 @@ public class JsonWriter {
     private static final int NUM_TAB_SPACES = 4; // the number of spaces that a tab is made up of
 
     private PrintWriter writer; // the writer that writes the review collection to file
-    private String fileDestinationPath; // the path of the file to write to
+    private String destinationFilePath; // the path of the file to write to
 
     // EFFECTS: sets the destination of the file the writer is to write to
-    //          to fileDestinationPath
-    public JsonWriter(String fileDestinationPath) {
-        this.fileDestinationPath = fileDestinationPath;
+    //          to destinationFilePath
+    public JsonWriter(String destinationFilePath) {
+        this.destinationFilePath = destinationFilePath;
     }
 
     // MODIFIES: this
@@ -27,7 +27,7 @@ public class JsonWriter {
     //          throws FileNotFoundException if the file that is the destination
     //          that the writer is supposed to write to is not found
     public void open() throws FileNotFoundException {
-        writer = new PrintWriter(new File(fileDestinationPath));
+        writer = new PrintWriter(new File(destinationFilePath));
     }
 
     // MODIFIES: this
