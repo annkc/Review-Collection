@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
+// Unit tests for JsonWriter
+
 // (Referenced the JsonWriterTest class in the JsonSerializationDemo project)
 
 public class JsonWriterTest {

@@ -10,12 +10,14 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
+// Unit tests for JsonReader
+
 // (Referenced the JsonReaderTest class in the JsonSerializationDemo project)
 
 public class JsonReaderTest {
 
     @Test
-    void testReaderNonExistentFile() {
+    public void testReaderNonExistentFile() {
         JsonReader reader = new JsonReader("./data/nonexistentFile.json");
         try {
             ReviewCollection collection = reader.read();
@@ -26,7 +28,7 @@ public class JsonReaderTest {
     }
 
     @Test
-    void testReaderEmptyReviewCollection() {
+    public void testReaderEmptyReviewCollection() {
         JsonReader reader = new JsonReader("./data/testReaderEmptyReviewCollection.json");
         try {
             ReviewCollection collection = reader.read();

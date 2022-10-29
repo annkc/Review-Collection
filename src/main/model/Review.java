@@ -112,6 +112,10 @@ public class Review implements WritableToJson {
         reviewText = new ArrayList<>();
     }
 
+
+    /*
+     * EFFECTS: returns this as JSON object
+     */
     @Override
     public JSONObject toJsonObject() {
         JSONObject jsonObject = new JSONObject();

@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// Unit tests for Review
+
 class ReviewTest {
     private Review review;
 
@@ -60,18 +62,19 @@ class ReviewTest {
     @Test
     public void toJsonObject() {
         JSONObject jsonObject = review.toJsonObject();
+        review.addWorkCreator("F. Scott Fitzgerald");
+        review.addParagraphToReviewText("I knew of the Great Gatsby before I had to read it.");
+
         assertEquals(review.getWorkTitle(), jsonObject.getString("work title"));
         assertEquals(review.getReviewTitle(), jsonObject.getString("review title"));
         assertEquals(review.getRating(), jsonObject.getInt("rating"));
 
-        review.addWorkCreator("F. Scott Fitzgerald");
         JSONArray jsonArrayWorkCreators = jsonObject.getJSONArray("work creators");
         for (Object json : jsonArrayWorkCreators) {
             JSONObject jsonObjectWorkCreator = (JSONObject) json;
             assertEquals("F. Scott Fitzgerald", jsonObjectWorkCreator.getString("name"));
         }
 
-        review.addParagraphToReviewText("I knew of the Great Gatsby before I had to read it.");
         JSONArray jsonArrayReviewText = jsonObject.getJSONArray("review text");
         for (Object json : jsonArrayReviewText) {
             JSONObject jsonObjectParagraph = (JSONObject) json;

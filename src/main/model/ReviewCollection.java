@@ -66,6 +66,9 @@ public class ReviewCollection implements WritableToJson {
     }
 
 
+    /*
+     * EFFECTS: returns this as JSON object
+     */
     @Override
     public JSONObject toJsonObject() {
         JSONObject jsonObject = new JSONObject();
