@@ -11,7 +11,7 @@ import java.util.regex.*;
 import java.util.Scanner;
 
 /*
- * Represents the review collection application.
+ * Represents the review collection application with command-line interface.
  *
  * (Referenced TellerApp class in the TellerApp project)
  * (Referenced the WorkRoomApp Class in the JsonSerializationDemo project)
@@ -300,6 +300,7 @@ public class ReviewCollectionApp {
         int position = 1;
         for (String title : collection.getReviewTitlesList()) {
             System.out.println(position + ": " + title);
+            position++;
         }
         System.out.println();
     }
