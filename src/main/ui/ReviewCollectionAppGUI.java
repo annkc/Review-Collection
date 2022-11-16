@@ -280,8 +280,8 @@ public class ReviewCollectionAppGUI extends JFrame {
         currentMiddle.add(reviewListPane);
         currentMiddle.add(currentChooseButton);
         add(currentMiddle, BorderLayout.CENTER);
+        currentChooseButton.setEnabled(false);
         reviewList.addListSelectionListener(new ListSelectionListener() {
-            @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (e.getValueIsAdjusting() == false) {
                     if (reviewList.getSelectedIndex() == -1) {
