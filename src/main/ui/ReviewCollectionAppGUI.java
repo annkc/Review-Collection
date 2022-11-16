@@ -109,9 +109,8 @@ public class ReviewCollectionAppGUI extends JFrame {
         viewReviews.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 remove(currentMiddle);
-                setUpReviewSelection();
-                add(viewButton, BorderLayout.SOUTH);
                 currentChooseButton = viewButton;
+                setUpReviewSelection();
                 revalidate();
                 repaint();
             }
@@ -123,9 +122,8 @@ public class ReviewCollectionAppGUI extends JFrame {
         deleteReview.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 remove(currentMiddle);
-                setUpReviewSelection();
-                add(deleteButton, BorderLayout.SOUTH);
                 currentChooseButton = deleteButton;
+                setUpReviewSelection();
                 revalidate();
                 repaint();
             }
@@ -180,23 +178,22 @@ public class ReviewCollectionAppGUI extends JFrame {
 
     private void setUpViewButton() {
         viewButton = new JButton("View");
+        viewButton.setEnabled(false);
         viewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 getContentPane().remove(currentMiddle);
-                remove(viewButton);
                 int index = reviewList.getSelectedIndex();
                 displayReview(collection.getReviewAt(index));
             }
         });
     }
 
-    //TODO
     private void setUpDeleteButton() {
         deleteButton = new JButton("Delete");
+        deleteButton.setEnabled(false);
         deleteButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 getContentPane().remove(currentMiddle);
-                remove(deleteButton);
                 int index = reviewList.getSelectedIndex();
                 collection.removeReview(collection.getReviewAt(index));
 
@@ -279,8 +276,10 @@ public class ReviewCollectionAppGUI extends JFrame {
         reviewList.setLayoutOrientation(JList.VERTICAL);
         reviewList.setVisibleRowCount(-1);
         JScrollPane reviewListPane = new JScrollPane(reviewList);
-        add(reviewListPane, BorderLayout.CENTER);
-        currentMiddle = reviewListPane;
+        currentMiddle = new JPanel(new GridLayout(2, 1));
+        currentMiddle.add(reviewListPane);
+        currentMiddle.add(currentChooseButton);
+        add(currentMiddle, BorderLayout.CENTER);
         reviewList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
