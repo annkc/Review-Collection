@@ -6,12 +6,14 @@ import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import javax.swing.*;
+import javax.swing.text.JTextComponent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 /*
  * Represents the review collection application with graphical user interface.
@@ -21,6 +23,9 @@ public class ReviewCollectionAppGUI extends JFrame {
     private static final int HEIGHT = 1000;
     private static final int WIDTH = 1000;
     private static final String JSON_FILE_PATHNAME = "./data/reviewcollection.json";
+    private static final String[] TEXT_BOX_LABELS = {"Review Title:", "Work Title:",
+            "Work Creators (separate with commas):", "Rating (integers 0-10):", "Rating (integers 0-10):",
+            "Body Text:"};
 
 
     private ReviewCollection collection;
@@ -30,7 +35,11 @@ public class ReviewCollectionAppGUI extends JFrame {
     private JButton deleteReview;
     private JButton saveCollection;
     private JButton loadCollection;
+    private JButton createButton;
 
+    private ArrayList<JTextComponent> textBoxes;
+
+    private JPanel creationArea;
     private JLabel middleSection;
     private ImageIcon thonkImage;
 
@@ -40,6 +49,7 @@ public class ReviewCollectionAppGUI extends JFrame {
     public ReviewCollectionAppGUI() {
         super("Review Collection App");
         collection = new ReviewCollection();
+        textBoxes = new ArrayList<>();
         jsonWriter = new JsonWriter(JSON_FILE_PATHNAME);
         jsonReader = new JsonReader(JSON_FILE_PATHNAME);
 
@@ -66,13 +76,14 @@ public class ReviewCollectionAppGUI extends JFrame {
         setUpDeleteReviewButton();
         setUpSaveCollectionButton();
         setUpLoadCollectionButton();
+        setUpCreateButton();
     }
 
     private void setUpCreateReviewButton() {
         newReview = new JButton("Create new review");
         newReview.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                collection.addReview(createReview());
+                reviewCreation();
             }
         });
     }
@@ -124,6 +135,42 @@ public class ReviewCollectionAppGUI extends JFrame {
         });
     }
 
+    private void setUpCreateButton() {
+        createButton = new JButton("Create");
+        createButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String ratingInput = textBoxes.get(3).getText();
+                if (Pattern.matches("[0-9]+", ratingInput) && Integer.parseInt(ratingInput) <= Review.RATING_TOTAL) {
+                    createReview();
+                    getContentPane().remove(creationArea);
+                    middleSection = new JLabel("Review successfully created!", SwingConstants.CENTER);
+                    getContentPane().add(middleSection, BorderLayout.CENTER);
+                    revalidate();
+                    repaint();
+                }
+
+            }
+        });
+    }
+
+    private void createReview() {
+        String reviewTitleInput = textBoxes.get(0).getText();
+        String workTitleInput = textBoxes.get(1).getText();
+        String ratingInput = textBoxes.get(3).getText();
+        Review newReview = new Review(workTitleInput, reviewTitleInput, Integer.parseInt(ratingInput));
+        collection.addReview(newReview);
+        String workCreatorsInput = textBoxes.get(2).getText();
+        String reviewTextInput = textBoxes.get(4).getText();
+        String[] workCreators = workCreatorsInput.split(",");
+        String[] reviewText = reviewTextInput.split("\n");
+        for (String creator : workCreators) {
+            newReview.addWorkCreator(creator);
+        }
+        for (String paragraph : reviewText) {
+            newReview.addParagraphToReviewText(paragraph);
+        }
+    }
+
     // EFFECTS: creates and adds the buttons that allow the user to make choices on what to do in the app
     //          so they are displayed in the app
     private void setUpButtonsSection() {
@@ -145,13 +192,28 @@ public class ReviewCollectionAppGUI extends JFrame {
     }
 
     // EFFECTS: takes in user input and returns review created using user input
-    private Review createReview() {
+    private void reviewCreation() {
         getContentPane().remove(middleSection);
-        middleSection = new JLabel("Review successfully created!", SwingConstants.CENTER);
-        getContentPane().add(middleSection, BorderLayout.CENTER);
+        creationArea = new JPanel();
+        for (int i = 0; i < TEXT_BOX_LABELS.length - 2; i++) {
+            JPanel row = new JPanel();
+            JLabel label = new JLabel(TEXT_BOX_LABELS[i], JLabel.TRAILING);
+            JTextField textBox = new JTextField(50);
+            textBoxes.add(textBox);
+            label.setLabelFor(textBox);
+            row.add(label);
+            row.add(textBox);
+            creationArea.add(row);
+        }
+        JPanel row = new JPanel();
+        JTextArea textBox = new JTextArea(25,100);
+        textBoxes.add(textBox);
+        row.add(textBox);
+        creationArea.add(row);
+        creationArea.add(createButton);
+        add(creationArea, BorderLayout.CENTER);
         revalidate();
         repaint();
-        return null;
     }
 
 
@@ -203,7 +265,6 @@ public class ReviewCollectionAppGUI extends JFrame {
 
     // EFFECTS: displays the review in the app for the user to see
     private void displayReview(Review review) {
-        collection.addReview(createReview());
         getContentPane().remove(middleSection);
         middleSection = new JLabel("<html>" + review.getReviewTitle() + "<br>" + "Work: " + review.getWorkTitle()
                 + "<br>" + "Work Creators: " + review.getWorkCreators() + "<br>" + "Rating: " + review.getRating()
