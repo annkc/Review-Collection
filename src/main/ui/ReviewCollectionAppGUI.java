@@ -33,27 +33,28 @@ public class ReviewCollectionAppGUI extends JFrame {
 
     private ReviewCollection collection;
 
-    private JButton newReview;
-    private JButton viewReviews;
-    private JButton deleteReview;
-    private JButton saveCollection;
-    private JButton loadCollection;
+    private JButton newReviewOptionButton;
+    private JButton viewReviewOptionButton;
+    private JButton deleteReviewOptionButton;
+    private JButton saveCollectionButton;
+    private JButton loadCollectionButton;
+
     private JButton createButton;
     private JButton viewButton;
     private JButton deleteButton;
-    private JButton currentChooseButton;
+    private JButton currentChooseButton; // the button that involves choosing an existing review
 
     private ArrayList<JTextComponent> creationTextBoxes;
-    private JTextField choosingTextBox;
     private JList reviewList;
-    private JComponent currentMiddle;
-    private JPanel creationArea;
+    private JComponent currentMiddle; // the current component displayed in the middle
+    private JPanel reviewCreationForm;
     private JLabel middleMessage;
-    private ImageIcon thonkImage;
+    private ImageIcon thonkImage; // starting image
 
     private JsonReader jsonReader;
     private JsonWriter jsonWriter;
 
+    // EFFECTS: constructs the app, initializing the fields and setting up and displaying the app's gui
     public ReviewCollectionAppGUI() {
         super("Review Collection App");
         collection = new ReviewCollection();
@@ -78,11 +79,11 @@ public class ReviewCollectionAppGUI extends JFrame {
 
     }
 
-    // EFFECTS: initializes the buttons and sets their behaviours when they are clicked
+    // EFFECTS: initializes the buttons and what will occur when they are clicked
     private void setUpButtons() {
-        setUpCreateReviewButton();
-        setUpViewReviewButton();
-        setUpDeleteReviewButton();
+        setUpCreateReviewOptionButton();
+        setUpViewReviewOptionButton();
+        setUpDeleteReviewOptionButton();
         setUpSaveCollectionButton();
         setUpLoadCollectionButton();
         setUpCreateButton();
@@ -90,23 +91,27 @@ public class ReviewCollectionAppGUI extends JFrame {
         setUpDeleteButton();
     }
 
-    private void setUpCreateReviewButton() {
-        newReview = new JButton("Create new review");
-        newReview.addActionListener(new ActionListener() {
+    // EFFECTS: initializes the create review option button and sets that the user will be shown a review creation
+    //          form when the button is clicked
+    private void setUpCreateReviewOptionButton() {
+        newReviewOptionButton = new JButton("Create new review");
+        newReviewOptionButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 setUpCreationArea();
                 getContentPane().remove(currentMiddle);
-                add(creationArea, BorderLayout.CENTER);
-                currentMiddle = creationArea;
+                add(reviewCreationForm, BorderLayout.CENTER);
+                currentMiddle = reviewCreationForm;
                 revalidate();
                 repaint();
             }
         });
     }
 
-    private void setUpViewReviewButton() {
-        viewReviews = new JButton("View your reviews");
-        viewReviews.addActionListener(new ActionListener() {
+    // EFFECTS: initializes the view review option button and sets that the user can select a review from the review
+    //          list and read the review when the button is clicked
+    private void setUpViewReviewOptionButton() {
+        viewReviewOptionButton = new JButton("View your reviews");
+        viewReviewOptionButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 remove(currentMiddle);
                 currentChooseButton = viewButton;
@@ -117,9 +122,11 @@ public class ReviewCollectionAppGUI extends JFrame {
         });
     }
 
-    private void setUpDeleteReviewButton() {
-        deleteReview = new JButton("Delete one of your reviews");
-        deleteReview.addActionListener(new ActionListener() {
+    // EFFECTS: initializes the delete review option button and sets that the user can select a review from the review
+    //          list and delete the review when the button is clicked
+    private void setUpDeleteReviewOptionButton() {
+        deleteReviewOptionButton = new JButton("Delete one of your reviews");
+        deleteReviewOptionButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 remove(currentMiddle);
                 currentChooseButton = deleteButton;
@@ -130,9 +137,11 @@ public class ReviewCollectionAppGUI extends JFrame {
         });
     }
 
+    // EFFECTS: initializes the save collection button and sets the current review collection will be saved to file
+    //          when the button is clicked
     private void setUpSaveCollectionButton() {
-        saveCollection = new JButton("Save collection");
-        saveCollection.addActionListener(new ActionListener() {
+        saveCollectionButton = new JButton("Save collection");
+        saveCollectionButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 getContentPane().remove(currentMiddle);
                 middleMessage = new JLabel(saveReviewCollection(), SwingConstants.CENTER);
@@ -144,9 +153,11 @@ public class ReviewCollectionAppGUI extends JFrame {
         });
     }
 
+    // EFFECTS: initializes the load collection button and sets that the review collection on file will be loaded
+    //          when the button is clicked
     private void setUpLoadCollectionButton() {
-        loadCollection = new JButton("Load collection");
-        loadCollection.addActionListener(new ActionListener() {
+        loadCollectionButton = new JButton("Load collection");
+        loadCollectionButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 getContentPane().remove(currentMiddle);
                 middleMessage = new JLabel(loadReviewCollection(), SwingConstants.CENTER);
@@ -158,6 +169,8 @@ public class ReviewCollectionAppGUI extends JFrame {
         });
     }
 
+    // EFFECTS: initializes the create review button and sets that input provided by the user will be used to create
+    //          a review and add it to the collection when the button is clicked
     private void setUpCreateButton() {
         createButton = new JButton("Create");
         createButton.addActionListener(new ActionListener() {
@@ -165,7 +178,7 @@ public class ReviewCollectionAppGUI extends JFrame {
                 String ratingInput = creationTextBoxes.get(3).getText();
                 if (Pattern.matches("[0-9]+", ratingInput) && Integer.parseInt(ratingInput) <= Review.RATING_TOTAL) {
                     createReview();
-                    getContentPane().remove(creationArea);
+                    getContentPane().remove(reviewCreationForm);
                     middleMessage = new JLabel("Review successfully created!", SwingConstants.CENTER);
                     getContentPane().add(middleMessage, BorderLayout.CENTER);
                     currentMiddle = middleMessage;
@@ -176,6 +189,8 @@ public class ReviewCollectionAppGUI extends JFrame {
         });
     }
 
+    // EFFECTS: initializes the view review button and sets that the review that the user has selected from the list
+    //          will be displayed for the user to view when the button is clicked
     private void setUpViewButton() {
         viewButton = new JButton("View");
         viewButton.setEnabled(false);
@@ -188,6 +203,8 @@ public class ReviewCollectionAppGUI extends JFrame {
         });
     }
 
+    // EFFECTS: initializes the delete review button and sets that the review that the user has selected from the list
+    //          will be deleted from the review collection when the button is clicked
     private void setUpDeleteButton() {
         deleteButton = new JButton("Delete");
         deleteButton.setEnabled(false);
@@ -206,37 +223,20 @@ public class ReviewCollectionAppGUI extends JFrame {
         });
     }
 
-    // EFFECTS: takes in user input and returns review created using user input
-    private void createReview() {
-        String reviewTitleInput = creationTextBoxes.get(0).getText();
-        String workTitleInput = creationTextBoxes.get(1).getText();
-        String ratingInput = creationTextBoxes.get(3).getText();
-        Review newReview = new Review(workTitleInput, reviewTitleInput, Integer.parseInt(ratingInput));
-        collection.addReview(newReview);
-        String workCreatorsInput = creationTextBoxes.get(2).getText();
-        String reviewTextInput = creationTextBoxes.get(4).getText();
-        String[] workCreators = workCreatorsInput.split(",");
-        String[] reviewText = reviewTextInput.split("\n");
-        for (String creator : workCreators) {
-            newReview.addWorkCreator(creator);
-        }
-        for (String paragraph : reviewText) {
-            newReview.addParagraphToReviewText(paragraph);
-        }
-    }
+
 
     // EFFECTS: creates and adds the buttons that allow the user to make choices on what to do in the app
     //          so they are displayed in the app
     private void setUpButtonsSection() {
         JPanel reviewButtonsSection = new JPanel();
         reviewButtonsSection.setLayout(new GridLayout(1,3));
-        reviewButtonsSection.add(newReview);
-        reviewButtonsSection.add(viewReviews);
-        reviewButtonsSection.add(deleteReview);
+        reviewButtonsSection.add(newReviewOptionButton);
+        reviewButtonsSection.add(viewReviewOptionButton);
+        reviewButtonsSection.add(deleteReviewOptionButton);
         JPanel collectionButtonsSection = new JPanel();
         collectionButtonsSection.setLayout(new GridLayout(1,2));
-        collectionButtonsSection.add(saveCollection);
-        collectionButtonsSection.add(loadCollection);
+        collectionButtonsSection.add(saveCollectionButton);
+        collectionButtonsSection.add(loadCollectionButton);
 
         JPanel buttons = new JPanel();
         buttons.setLayout(new GridLayout(2,1));
@@ -245,9 +245,9 @@ public class ReviewCollectionAppGUI extends JFrame {
         add(buttons, BorderLayout.NORTH);
     }
 
-    // EFFECTS: sets up the form that users interact with to create a new review
+    // EFFECTS: sets up the form that users interact with and enter input into to create a new review
     private void setUpCreationArea() {
-        creationArea = new JPanel();
+        reviewCreationForm = new JPanel();
         for (int i = 0; i < TEXT_BOX_LABELS.length - 2; i++) {
             JPanel row = new JPanel();
             JLabel label = new JLabel(TEXT_BOX_LABELS[i], JLabel.TRAILING);
@@ -256,16 +256,15 @@ public class ReviewCollectionAppGUI extends JFrame {
             label.setLabelFor(textBox);
             row.add(label);
             row.add(textBox);
-            creationArea.add(row);
+            reviewCreationForm.add(row);
         }
         JPanel row = new JPanel();
         JTextArea textBox = new JTextArea(25,100);
         creationTextBoxes.add(textBox);
         row.add(textBox);
-        creationArea.add(row);
-        creationArea.add(createButton);
+        reviewCreationForm.add(row);
+        reviewCreationForm.add(createButton);
     }
-
 
     // EFFECTS: displays the list of reviews in the collection in the app
     private void setUpReviewSelection() {
@@ -294,6 +293,51 @@ public class ReviewCollectionAppGUI extends JFrame {
         });
     }
 
+
+
+    // EFFECTS: uses user input to create a new review and add it to the review collection
+    private void createReview() {
+        String reviewTitleInput = creationTextBoxes.get(0).getText();
+        String workTitleInput = creationTextBoxes.get(1).getText();
+        String ratingInput = creationTextBoxes.get(3).getText();
+        Review newReview = new Review(workTitleInput, reviewTitleInput, Integer.parseInt(ratingInput));
+        collection.addReview(newReview);
+        String workCreatorsInput = creationTextBoxes.get(2).getText();
+        String reviewTextInput = creationTextBoxes.get(4).getText();
+        String[] workCreators = workCreatorsInput.split(",");
+        String[] reviewText = reviewTextInput.split("\n");
+        for (String creator : workCreators) {
+            newReview.addWorkCreator(creator);
+        }
+        for (String paragraph : reviewText) {
+            newReview.addParagraphToReviewText(paragraph);
+        }
+    }
+
+    // EFFECTS: displays the review in the app for the user to see
+    private void displayReview(Review review) {
+        getContentPane().remove(currentMiddle);
+        String middleMessageText = "<html>" + review.getReviewTitle() + "<br><br>" + "Work: " + review.getWorkTitle()
+                + "<br>" + "Work Creators: " + review.getWorkCreators() + "<br>" + "Rating: " + review.getRating()
+                + "/" + Review.RATING_TOTAL + "<br>";
+        ArrayList<String> reviewTextList = review.getReviewText();
+        for (String paragraph : reviewTextList) {
+            middleMessageText += "<br>" + paragraph;
+        }
+        middleMessageText += "</html>";
+        middleMessage = new JLabel(middleMessageText);
+
+        JPanel reviewDisplay = new JPanel();
+        Border margins = BorderFactory.createEmptyBorder(20, 20, 20, 20);
+        reviewDisplay.setBorder(margins);
+        reviewDisplay.add(middleMessage);
+        getContentPane().add(reviewDisplay, BorderLayout.CENTER);
+        currentMiddle = reviewDisplay;
+        revalidate();
+        repaint();
+
+    }
+
     /*
      * EFFECTS: saves the review collection to file, returns message saying if it was successful
      */
@@ -319,30 +363,6 @@ public class ReviewCollectionAppGUI extends JFrame {
         } catch (IOException e) {
             return "Cannot read from file at: " + JSON_FILE_PATHNAME;
         }
-
-    }
-
-    // EFFECTS: displays the review in the app for the user to see
-    private void displayReview(Review review) {
-        getContentPane().remove(currentMiddle);
-        String middleMessageText = "<html>" + review.getReviewTitle() + "<br><br>" + "Work: " + review.getWorkTitle()
-                + "<br>" + "Work Creators: " + review.getWorkCreators() + "<br>" + "Rating: " + review.getRating()
-                + "/" + Review.RATING_TOTAL + "<br>";
-        ArrayList<String> reviewTextList = review.getReviewText();
-        for (String paragraph : reviewTextList) {
-            middleMessageText += "<br>" + paragraph;
-        }
-        middleMessageText += "</html>";
-        middleMessage = new JLabel(middleMessageText);
-
-        JPanel reviewDisplay = new JPanel();
-        Border margins = BorderFactory.createEmptyBorder(20, 20, 20, 20);
-        reviewDisplay.setBorder(margins);
-        reviewDisplay.add(middleMessage);
-        getContentPane().add(reviewDisplay, BorderLayout.CENTER);
-        currentMiddle = reviewDisplay;
-        revalidate();
-        repaint();
 
     }
 
