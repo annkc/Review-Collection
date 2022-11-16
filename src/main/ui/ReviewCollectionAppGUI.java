@@ -7,6 +7,8 @@ import persistence.JsonWriter;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.text.JTextComponent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -37,10 +39,13 @@ public class ReviewCollectionAppGUI extends JFrame {
     private JButton saveCollection;
     private JButton loadCollection;
     private JButton createButton;
-    private JButton chooseButton;
+    private JButton viewButton;
+    private JButton deleteButton;
+    private JButton currentChooseButton;
 
     private ArrayList<JTextComponent> creationTextBoxes;
     private JTextField choosingTextBox;
+    private JList reviewList;
     private JComponent currentMiddle;
     private JPanel creationArea;
     private JLabel middleMessage;
@@ -81,6 +86,8 @@ public class ReviewCollectionAppGUI extends JFrame {
         setUpSaveCollectionButton();
         setUpLoadCollectionButton();
         setUpCreateButton();
+        setUpViewButton();
+        setUpDeleteButton();
     }
 
     private void setUpCreateReviewButton() {
@@ -101,9 +108,10 @@ public class ReviewCollectionAppGUI extends JFrame {
         viewReviews = new JButton("View your reviews");
         viewReviews.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-//                displayReview(chooseReview());
                 remove(currentMiddle);
-                displayReview(collection.getReviewAt(0));
+                setUpReviewSelection();
+                add(viewButton, BorderLayout.SOUTH);
+                currentChooseButton = viewButton;
                 revalidate();
                 repaint();
             }
@@ -114,8 +122,12 @@ public class ReviewCollectionAppGUI extends JFrame {
         deleteReview = new JButton("Delete one of your reviews");
         deleteReview.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                collection.removeReview(chooseReview());
+                remove(currentMiddle);
+                setUpReviewSelection();
+                add(deleteButton, BorderLayout.SOUTH);
+                currentChooseButton = deleteButton;
                 revalidate();
+                repaint();
             }
         });
     }
@@ -166,13 +178,29 @@ public class ReviewCollectionAppGUI extends JFrame {
         });
     }
 
-    //TODO
-    private void setUpChooseButton() {
-        chooseButton = new JButton("Load collection");
-        chooseButton.addActionListener(new ActionListener() {
+    private void setUpViewButton() {
+        viewButton = new JButton("View");
+        viewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 getContentPane().remove(currentMiddle);
-                middleMessage = new JLabel(loadReviewCollection(), SwingConstants.CENTER);
+                remove(viewButton);
+                int index = reviewList.getSelectedIndex();
+                displayReview(collection.getReviewAt(index));
+            }
+        });
+    }
+
+    //TODO
+    private void setUpDeleteButton() {
+        deleteButton = new JButton("Delete");
+        deleteButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                getContentPane().remove(currentMiddle);
+                remove(deleteButton);
+                int index = reviewList.getSelectedIndex();
+                collection.removeReview(collection.getReviewAt(index));
+
+                middleMessage = new JLabel("Review deleted!", SwingConstants.CENTER);
                 getContentPane().add(middleMessage, BorderLayout.CENTER);
                 currentMiddle = middleMessage;
                 revalidate();
@@ -243,22 +271,29 @@ public class ReviewCollectionAppGUI extends JFrame {
 
 
     // EFFECTS: displays the list of reviews in the collection in the app
-    private void displayReviewList() {
+    private void setUpReviewSelection() {
         ArrayList<String> reviewTitlesList = collection.getReviewTitlesList();
         String[] reviewTitlesArray = reviewTitlesList.toArray(new String[reviewTitlesList.size()]);
-        for (int i = 0; i < reviewTitlesArray.length; i++) {
-            reviewTitlesArray[i] = i + ": " + reviewTitlesArray[i];
-        }
-
+        reviewList = new JList(reviewTitlesArray);
+        reviewList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        reviewList.setLayoutOrientation(JList.VERTICAL);
+        reviewList.setVisibleRowCount(-1);
+        JScrollPane reviewListPane = new JScrollPane(reviewList);
+        add(reviewListPane, BorderLayout.CENTER);
+        currentMiddle = reviewListPane;
+        reviewList.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (e.getValueIsAdjusting() == false) {
+                    if (reviewList.getSelectedIndex() == -1) {
+                        currentChooseButton.setEnabled(false);
+                    } else {
+                        currentChooseButton.setEnabled(true);
+                    }
+                }
+            }
+        });
     }
-
-    // EFFECTS: takes in user input and returns the review the user selected
-    private Review chooseReview() {
-        displayReviewList();
-
-        return null;
-    }
-
 
     /*
      * EFFECTS: saves the review collection to file, returns message saying if it was successful
