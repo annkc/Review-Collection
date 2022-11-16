@@ -58,7 +58,6 @@ public class ReviewCollectionAppGUI extends JFrame {
     public ReviewCollectionAppGUI() {
         super("Review Collection App");
         collection = new ReviewCollection();
-        creationTextBoxes = new ArrayList<>();
         jsonWriter = new JsonWriter(JSON_FILE_PATHNAME);
         jsonReader = new JsonReader(JSON_FILE_PATHNAME);
 
@@ -247,6 +246,7 @@ public class ReviewCollectionAppGUI extends JFrame {
 
     // EFFECTS: sets up the form that users interact with and enter input into to create a new review
     private void setUpCreationArea() {
+        creationTextBoxes = new ArrayList<>();
         reviewCreationForm = new JPanel();
         for (int i = 0; i < TEXT_BOX_LABELS.length - 2; i++) {
             JPanel row = new JPanel();
