@@ -29,6 +29,7 @@ public class ReviewCollectionAppGUI extends JFrame {
     private static final String[] TEXT_BOX_LABELS = {"Review Title:", "Work Title:",
             "Work Creators (separate with commas):", "Rating (integers 0-10):", "Rating (integers 0-10):",
             "Body Text:"};
+    private static final Border MARGINS = BorderFactory.createEmptyBorder(20, 20, 20, 20);
 
 
     private ReviewCollection collection;
@@ -96,10 +97,10 @@ public class ReviewCollectionAppGUI extends JFrame {
         newReviewOptionButton = new JButton("Create new review");
         newReviewOptionButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                setUpCreationArea();
+                setUpCreationForm();
                 getContentPane().remove(currentMiddle);
-                add(reviewCreationForm, BorderLayout.CENTER);
                 currentMiddle = reviewCreationForm;
+                add(currentMiddle, BorderLayout.CENTER);
                 revalidate();
                 repaint();
             }
@@ -175,9 +176,11 @@ public class ReviewCollectionAppGUI extends JFrame {
         createButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String ratingInput = creationTextBoxes.get(3).getText();
-                if (Pattern.matches("[0-9]+", ratingInput) && Integer.parseInt(ratingInput) <= Review.RATING_TOTAL) {
+                String reviewTitleInput = creationTextBoxes.get(0).getText();
+                if (Pattern.matches("[0-9]+", ratingInput) && Integer.parseInt(ratingInput) <= Review.RATING_TOTAL
+                        && reviewTitleInput.length() > 0) {
                     createReview();
-                    getContentPane().remove(reviewCreationForm);
+                    getContentPane().remove(currentMiddle);
                     middleMessage = new JLabel("Review successfully created!", SwingConstants.CENTER);
                     getContentPane().add(middleMessage, BorderLayout.CENTER);
                     currentMiddle = middleMessage;
@@ -245,7 +248,7 @@ public class ReviewCollectionAppGUI extends JFrame {
     }
 
     // EFFECTS: sets up the form that users interact with and enter input into to create a new review
-    private void setUpCreationArea() {
+    private void setUpCreationForm() {
         creationTextBoxes = new ArrayList<>();
         reviewCreationForm = new JPanel();
         for (int i = 0; i < TEXT_BOX_LABELS.length - 2; i++) {
@@ -259,7 +262,8 @@ public class ReviewCollectionAppGUI extends JFrame {
             reviewCreationForm.add(row);
         }
         JPanel row = new JPanel();
-        JTextArea textBox = new JTextArea(25,100);
+        JTextArea textBox = new JTextArea(20,100);
+        textBox.setLineWrap(true);
         creationTextBoxes.add(textBox);
         row.add(textBox);
         reviewCreationForm.add(row);
@@ -328,15 +332,24 @@ public class ReviewCollectionAppGUI extends JFrame {
         middleMessage = new JLabel(middleMessageText);
 
         JPanel reviewDisplay = new JPanel();
-        Border margins = BorderFactory.createEmptyBorder(20, 20, 20, 20);
-        reviewDisplay.setBorder(margins);
+        reviewDisplay.setBorder(MARGINS);
         reviewDisplay.add(middleMessage);
-        getContentPane().add(reviewDisplay, BorderLayout.CENTER);
-        currentMiddle = reviewDisplay;
+        currentMiddle = new JScrollPane(middleMessage);
+        currentMiddle.setBorder(MARGINS);
+        getContentPane().add(currentMiddle, BorderLayout.CENTER);
         revalidate();
         repaint();
 
     }
+
+    //TODO must write a method that displays all reviews with scrolling capabilities
+    // add all reviews in text form into a textArea and then add to scrollpane
+    // then create new button, differentiate between "view one review" and "view all"
+//    private void displayAllReviews() {
+//        JPanel allReviews = new JPanel(new FlowLayout(9));
+//        currentMiddle = new JScrollPane(new FlowLayout());
+//
+//    }
 
     /*
      * EFFECTS: saves the review collection to file, returns message saying if it was successful
