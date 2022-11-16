@@ -6,6 +6,7 @@ import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.text.JTextComponent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -20,7 +21,7 @@ import java.util.regex.Pattern;
  */
 public class ReviewCollectionAppGUI extends JFrame {
 
-    private static final int HEIGHT = 1000;
+    private static final int HEIGHT = 650;
     private static final int WIDTH = 1000;
     private static final String JSON_FILE_PATHNAME = "./data/reviewcollection.json";
     private static final String[] TEXT_BOX_LABELS = {"Review Title:", "Work Title:",
@@ -36,11 +37,13 @@ public class ReviewCollectionAppGUI extends JFrame {
     private JButton saveCollection;
     private JButton loadCollection;
     private JButton createButton;
+    private JButton chooseButton;
 
-    private ArrayList<JTextComponent> textBoxes;
-
+    private ArrayList<JTextComponent> creationTextBoxes;
+    private JTextField choosingTextBox;
+    private JComponent currentMiddle;
     private JPanel creationArea;
-    private JLabel middleSection;
+    private JLabel middleMessage;
     private ImageIcon thonkImage;
 
     private JsonReader jsonReader;
@@ -49,7 +52,7 @@ public class ReviewCollectionAppGUI extends JFrame {
     public ReviewCollectionAppGUI() {
         super("Review Collection App");
         collection = new ReviewCollection();
-        textBoxes = new ArrayList<>();
+        creationTextBoxes = new ArrayList<>();
         jsonWriter = new JsonWriter(JSON_FILE_PATHNAME);
         jsonReader = new JsonReader(JSON_FILE_PATHNAME);
 
@@ -57,8 +60,9 @@ public class ReviewCollectionAppGUI extends JFrame {
         setMinimumSize(new Dimension(WIDTH, HEIGHT));
 
         thonkImage = new ImageIcon(".\\data\\thonkEmoji.png");
-        middleSection = new JLabel(thonkImage);
-        add(middleSection);
+        middleMessage = new JLabel(thonkImage);
+        add(middleMessage);
+        currentMiddle = middleMessage;
         setUpButtons();
 
         setUpButtonsSection();
@@ -83,7 +87,12 @@ public class ReviewCollectionAppGUI extends JFrame {
         newReview = new JButton("Create new review");
         newReview.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                reviewCreation();
+                setUpCreationArea();
+                getContentPane().remove(currentMiddle);
+                add(creationArea, BorderLayout.CENTER);
+                currentMiddle = creationArea;
+                revalidate();
+                repaint();
             }
         });
     }
@@ -92,7 +101,9 @@ public class ReviewCollectionAppGUI extends JFrame {
         viewReviews = new JButton("View your reviews");
         viewReviews.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                displayReview(chooseReview());
+//                displayReview(chooseReview());
+                remove(currentMiddle);
+                displayReview(collection.getReviewAt(0));
                 revalidate();
                 repaint();
             }
@@ -113,9 +124,10 @@ public class ReviewCollectionAppGUI extends JFrame {
         saveCollection = new JButton("Save collection");
         saveCollection.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                getContentPane().remove(middleSection);
-                middleSection = new JLabel(saveReviewCollection(), SwingConstants.CENTER);
-                getContentPane().add(middleSection, BorderLayout.CENTER);
+                getContentPane().remove(currentMiddle);
+                middleMessage = new JLabel(saveReviewCollection(), SwingConstants.CENTER);
+                getContentPane().add(middleMessage, BorderLayout.CENTER);
+                currentMiddle = middleMessage;
                 revalidate();
                 repaint();
             }
@@ -126,9 +138,10 @@ public class ReviewCollectionAppGUI extends JFrame {
         loadCollection = new JButton("Load collection");
         loadCollection.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                getContentPane().remove(middleSection);
-                middleSection = new JLabel(loadReviewCollection(), SwingConstants.CENTER);
-                getContentPane().add(middleSection, BorderLayout.CENTER);
+                getContentPane().remove(currentMiddle);
+                middleMessage = new JLabel(loadReviewCollection(), SwingConstants.CENTER);
+                getContentPane().add(middleMessage, BorderLayout.CENTER);
+                currentMiddle = middleMessage;
                 revalidate();
                 repaint();
             }
@@ -139,28 +152,44 @@ public class ReviewCollectionAppGUI extends JFrame {
         createButton = new JButton("Create");
         createButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String ratingInput = textBoxes.get(3).getText();
+                String ratingInput = creationTextBoxes.get(3).getText();
                 if (Pattern.matches("[0-9]+", ratingInput) && Integer.parseInt(ratingInput) <= Review.RATING_TOTAL) {
                     createReview();
                     getContentPane().remove(creationArea);
-                    middleSection = new JLabel("Review successfully created!", SwingConstants.CENTER);
-                    getContentPane().add(middleSection, BorderLayout.CENTER);
+                    middleMessage = new JLabel("Review successfully created!", SwingConstants.CENTER);
+                    getContentPane().add(middleMessage, BorderLayout.CENTER);
+                    currentMiddle = middleMessage;
                     revalidate();
                     repaint();
                 }
-
             }
         });
     }
 
+    //TODO
+    private void setUpChooseButton() {
+        chooseButton = new JButton("Load collection");
+        chooseButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                getContentPane().remove(currentMiddle);
+                middleMessage = new JLabel(loadReviewCollection(), SwingConstants.CENTER);
+                getContentPane().add(middleMessage, BorderLayout.CENTER);
+                currentMiddle = middleMessage;
+                revalidate();
+                repaint();
+            }
+        });
+    }
+
+    // EFFECTS: takes in user input and returns review created using user input
     private void createReview() {
-        String reviewTitleInput = textBoxes.get(0).getText();
-        String workTitleInput = textBoxes.get(1).getText();
-        String ratingInput = textBoxes.get(3).getText();
+        String reviewTitleInput = creationTextBoxes.get(0).getText();
+        String workTitleInput = creationTextBoxes.get(1).getText();
+        String ratingInput = creationTextBoxes.get(3).getText();
         Review newReview = new Review(workTitleInput, reviewTitleInput, Integer.parseInt(ratingInput));
         collection.addReview(newReview);
-        String workCreatorsInput = textBoxes.get(2).getText();
-        String reviewTextInput = textBoxes.get(4).getText();
+        String workCreatorsInput = creationTextBoxes.get(2).getText();
+        String reviewTextInput = creationTextBoxes.get(4).getText();
         String[] workCreators = workCreatorsInput.split(",");
         String[] reviewText = reviewTextInput.split("\n");
         for (String creator : workCreators) {
@@ -191,15 +220,14 @@ public class ReviewCollectionAppGUI extends JFrame {
         add(buttons, BorderLayout.NORTH);
     }
 
-    // EFFECTS: takes in user input and returns review created using user input
-    private void reviewCreation() {
-        getContentPane().remove(middleSection);
+    // EFFECTS: sets up the form that users interact with to create a new review
+    private void setUpCreationArea() {
         creationArea = new JPanel();
         for (int i = 0; i < TEXT_BOX_LABELS.length - 2; i++) {
             JPanel row = new JPanel();
             JLabel label = new JLabel(TEXT_BOX_LABELS[i], JLabel.TRAILING);
             JTextField textBox = new JTextField(50);
-            textBoxes.add(textBox);
+            creationTextBoxes.add(textBox);
             label.setLabelFor(textBox);
             row.add(label);
             row.add(textBox);
@@ -207,13 +235,10 @@ public class ReviewCollectionAppGUI extends JFrame {
         }
         JPanel row = new JPanel();
         JTextArea textBox = new JTextArea(25,100);
-        textBoxes.add(textBox);
+        creationTextBoxes.add(textBox);
         row.add(textBox);
         creationArea.add(row);
         creationArea.add(createButton);
-        add(creationArea, BorderLayout.CENTER);
-        revalidate();
-        repaint();
     }
 
 
@@ -265,11 +290,23 @@ public class ReviewCollectionAppGUI extends JFrame {
 
     // EFFECTS: displays the review in the app for the user to see
     private void displayReview(Review review) {
-        getContentPane().remove(middleSection);
-        middleSection = new JLabel("<html>" + review.getReviewTitle() + "<br>" + "Work: " + review.getWorkTitle()
+        getContentPane().remove(currentMiddle);
+        String middleMessageText = "<html>" + review.getReviewTitle() + "<br><br>" + "Work: " + review.getWorkTitle()
                 + "<br>" + "Work Creators: " + review.getWorkCreators() + "<br>" + "Rating: " + review.getRating()
-                + Review.RATING_TOTAL + "<br>" + "</html>");
-        getContentPane().add(middleSection, BorderLayout.CENTER);
+                + "/" + Review.RATING_TOTAL + "<br>";
+        ArrayList<String> reviewTextList = review.getReviewText();
+        for (String paragraph : reviewTextList) {
+            middleMessageText += "<br>" + paragraph;
+        }
+        middleMessageText += "</html>";
+        middleMessage = new JLabel(middleMessageText);
+
+        JPanel reviewDisplay = new JPanel();
+        Border margins = BorderFactory.createEmptyBorder(20, 20, 20, 20);
+        reviewDisplay.setBorder(margins);
+        reviewDisplay.add(middleMessage);
+        getContentPane().add(reviewDisplay, BorderLayout.CENTER);
+        currentMiddle = reviewDisplay;
         revalidate();
         repaint();
 
