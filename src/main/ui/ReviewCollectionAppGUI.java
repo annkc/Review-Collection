@@ -264,8 +264,9 @@ public class ReviewCollectionAppGUI extends JFrame {
         JPanel row = new JPanel();
         JTextArea textBox = new JTextArea(20,100);
         textBox.setLineWrap(true);
+
         creationTextBoxes.add(textBox);
-        row.add(textBox);
+        row.add(new JScrollPane(textBox));
         reviewCreationForm.add(row);
         reviewCreationForm.add(createButton);
     }
