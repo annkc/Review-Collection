@@ -175,7 +175,7 @@ public class ReviewCollectionAppGUI extends JFrame {
         createButton = new JButton("Create");
         createButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String ratingInput = creationTextBoxes.get(3).getText();
+                String ratingInput = creationTextBoxes.get(3).getText().trim();
                 String reviewTitleInput = creationTextBoxes.get(0).getText();
                 if (Pattern.matches("[0-9]+", ratingInput) && Integer.parseInt(ratingInput) <= Review.RATING_TOTAL
                         && reviewTitleInput.length() > 0) {
@@ -304,7 +304,7 @@ public class ReviewCollectionAppGUI extends JFrame {
     private void createReview() {
         String reviewTitleInput = creationTextBoxes.get(0).getText();
         String workTitleInput = creationTextBoxes.get(1).getText();
-        String ratingInput = creationTextBoxes.get(3).getText();
+        String ratingInput = creationTextBoxes.get(3).getText().trim();
         Review newReview = new Review(workTitleInput, reviewTitleInput, Integer.parseInt(ratingInput));
         collection.addReview(newReview);
         String workCreatorsInput = creationTextBoxes.get(2).getText();
