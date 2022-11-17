@@ -9,6 +9,8 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableModel;
 import javax.swing.text.JTextComponent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -36,6 +38,7 @@ public class ReviewCollectionAppGUI extends JFrame {
 
     private JButton newReviewOptionButton;
     private JButton viewReviewOptionButton;
+    private JButton viewAllReviewsOptionButton;
     private JButton deleteReviewOptionButton;
     private JButton saveCollectionButton;
     private JButton loadCollectionButton;
@@ -83,6 +86,7 @@ public class ReviewCollectionAppGUI extends JFrame {
     private void setUpButtons() {
         setUpCreateReviewOptionButton();
         setUpViewReviewOptionButton();
+        setUpViewAllReviewsOptionButton();
         setUpDeleteReviewOptionButton();
         setUpSaveCollectionButton();
         setUpLoadCollectionButton();
@@ -110,12 +114,24 @@ public class ReviewCollectionAppGUI extends JFrame {
     // EFFECTS: initializes the view review option button and sets that the user can select a review from the review
     //          list and read the review when the button is clicked
     private void setUpViewReviewOptionButton() {
-        viewReviewOptionButton = new JButton("View your reviews");
+        viewReviewOptionButton = new JButton("View a review");
         viewReviewOptionButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 remove(currentMiddle);
                 currentChooseButton = viewButton;
                 setUpReviewSelection();
+                revalidate();
+                repaint();
+            }
+        });
+    }
+
+    private void setUpViewAllReviewsOptionButton() {
+        viewAllReviewsOptionButton = new JButton("View all reviews");
+        viewAllReviewsOptionButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                remove(currentMiddle);
+                displayAllReviews();
                 revalidate();
                 repaint();
             }
@@ -231,9 +247,10 @@ public class ReviewCollectionAppGUI extends JFrame {
     //          so they are displayed in the app
     private void setUpButtonsSection() {
         JPanel reviewButtonsSection = new JPanel();
-        reviewButtonsSection.setLayout(new GridLayout(1,3));
+        reviewButtonsSection.setLayout(new GridLayout(1,4));
         reviewButtonsSection.add(newReviewOptionButton);
         reviewButtonsSection.add(viewReviewOptionButton);
+        reviewButtonsSection.add(viewAllReviewsOptionButton);
         reviewButtonsSection.add(deleteReviewOptionButton);
         JPanel collectionButtonsSection = new JPanel();
         collectionButtonsSection.setLayout(new GridLayout(1,2));
@@ -343,14 +360,32 @@ public class ReviewCollectionAppGUI extends JFrame {
 
     }
 
-    //TODO must write a method that displays all reviews with scrolling capabilities
-    // add all reviews in text form into a textArea and then add to scrollpane
-    // then create new button, differentiate between "view one review" and "view all"
-//    private void displayAllReviews() {
-//        JPanel allReviews = new JPanel(new FlowLayout(9));
-//        currentMiddle = new JScrollPane(new FlowLayout());
-//
-//    }
+
+    private void displayAllReviews() {
+        getContentPane().remove(currentMiddle);
+        String middleMessageText = "<html>";
+        for (int i = 0; i < collection.getReviewTitlesList().size(); i++) {
+            Review review = collection.getReviewAt(i);
+            middleMessageText += "Review Title: " + review.getReviewTitle() + "<br>" + "Work Title: "
+                    + review.getWorkTitle() + "<br>" + "Work Creators: " + review.getWorkCreators() + "<br>"
+                    + "Rating: " + review.getRating() + "/" + Review.RATING_TOTAL + "<br>";
+            ArrayList<String> reviewTextList = review.getReviewText();
+            middleMessageText += "Body Text:";
+            for (String paragraph : reviewTextList) {
+                middleMessageText += "<br>" + paragraph;
+            }
+            middleMessageText += "<br><br><br><br>";
+        }
+        middleMessageText += "</html>";
+        middleMessage = new JLabel(middleMessageText);
+        JPanel reviewDisplay = new JPanel();
+        reviewDisplay.add(middleMessage);
+        currentMiddle = new JScrollPane(middleMessage);
+        currentMiddle.setBorder(MARGINS);
+        getContentPane().add(currentMiddle, BorderLayout.CENTER);
+        revalidate();
+        repaint();
+    }
 
     /*
      * EFFECTS: saves the review collection to file, returns message saying if it was successful
