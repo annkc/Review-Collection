@@ -50,8 +50,10 @@ public class ReviewCollectionAppGUI extends JFrame {
     private JList reviewList;
     private JComponent currentMiddle; // the current component displayed in the middle
     private JPanel reviewCreationForm;
-    private JLabel middleMessage;
+    private JLabel middleLabel;
     private ImageIcon thonkImage; // starting image
+    private ImageIcon createdImage;
+    private ImageIcon deletedImage;
 
     private JsonReader jsonReader;
     private JsonWriter jsonWriter;
@@ -67,9 +69,11 @@ public class ReviewCollectionAppGUI extends JFrame {
         setMinimumSize(new Dimension(WIDTH, HEIGHT));
 
         thonkImage = new ImageIcon(".\\data\\thonkEmoji.png");
-        middleMessage = new JLabel(thonkImage);
-        add(middleMessage);
-        currentMiddle = middleMessage;
+        createdImage = new ImageIcon(".\\data\\reviewCreatedImage.png");
+        deletedImage = new ImageIcon(".\\data\\reviewDeletedImage.png");
+        middleLabel = new JLabel(thonkImage);
+        add(middleLabel);
+        currentMiddle = middleLabel;
         setUpButtons();
 
         setUpButtonsSection();
@@ -158,9 +162,9 @@ public class ReviewCollectionAppGUI extends JFrame {
         saveCollectionButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 getContentPane().remove(currentMiddle);
-                middleMessage = new JLabel(saveReviewCollection(), SwingConstants.CENTER);
-                getContentPane().add(middleMessage, BorderLayout.CENTER);
-                currentMiddle = middleMessage;
+                middleLabel = new JLabel(saveReviewCollection(), SwingConstants.CENTER);
+                getContentPane().add(middleLabel, BorderLayout.CENTER);
+                currentMiddle = middleLabel;
                 revalidate();
                 repaint();
             }
@@ -174,9 +178,9 @@ public class ReviewCollectionAppGUI extends JFrame {
         loadCollectionButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 getContentPane().remove(currentMiddle);
-                middleMessage = new JLabel(loadReviewCollection(), SwingConstants.CENTER);
-                getContentPane().add(middleMessage, BorderLayout.CENTER);
-                currentMiddle = middleMessage;
+                middleLabel = new JLabel(loadReviewCollection(), SwingConstants.CENTER);
+                getContentPane().add(middleLabel, BorderLayout.CENTER);
+                currentMiddle = middleLabel;
                 revalidate();
                 repaint();
             }
@@ -195,9 +199,9 @@ public class ReviewCollectionAppGUI extends JFrame {
                         && reviewTitleInput.length() > 0) {
                     createReview();
                     getContentPane().remove(currentMiddle);
-                    middleMessage = new JLabel("Review successfully created!", SwingConstants.CENTER);
-                    getContentPane().add(middleMessage, BorderLayout.CENTER);
-                    currentMiddle = middleMessage;
+                    middleLabel = new JLabel(createdImage);
+                    getContentPane().add(middleLabel, BorderLayout.CENTER);
+                    currentMiddle = middleLabel;
                     revalidate();
                     repaint();
                 }
@@ -230,9 +234,9 @@ public class ReviewCollectionAppGUI extends JFrame {
                 int index = reviewList.getSelectedIndex();
                 collection.removeReview(collection.getReviewAt(index));
 
-                middleMessage = new JLabel("Review deleted!", SwingConstants.CENTER);
-                getContentPane().add(middleMessage, BorderLayout.CENTER);
-                currentMiddle = middleMessage;
+                middleLabel = new JLabel(deletedImage);
+                getContentPane().add(middleLabel, BorderLayout.CENTER);
+                currentMiddle = middleLabel;
                 revalidate();
                 repaint();
             }
@@ -345,12 +349,12 @@ public class ReviewCollectionAppGUI extends JFrame {
             middleMessageText += "<br>" + paragraph;
         }
         middleMessageText += "</html>";
-        middleMessage = new JLabel(middleMessageText);
+        middleLabel = new JLabel(middleMessageText);
 
         JPanel reviewDisplay = new JPanel();
         reviewDisplay.setBorder(MARGINS);
-        reviewDisplay.add(middleMessage);
-        currentMiddle = new JScrollPane(middleMessage);
+        reviewDisplay.add(middleLabel);
+        currentMiddle = new JScrollPane(middleLabel);
         currentMiddle.setBorder(MARGINS);
         getContentPane().add(currentMiddle, BorderLayout.CENTER);
         revalidate();
@@ -375,10 +379,10 @@ public class ReviewCollectionAppGUI extends JFrame {
             middleMessageText += "<br><br><br><br>";
         }
         middleMessageText += "</html>";
-        middleMessage = new JLabel(middleMessageText);
+        middleLabel = new JLabel(middleMessageText);
         JPanel reviewDisplay = new JPanel();
-        reviewDisplay.add(middleMessage);
-        currentMiddle = new JScrollPane(middleMessage);
+        reviewDisplay.add(middleLabel);
+        currentMiddle = new JScrollPane(middleLabel);
         currentMiddle.setBorder(MARGINS);
         getContentPane().add(currentMiddle, BorderLayout.CENTER);
         revalidate();

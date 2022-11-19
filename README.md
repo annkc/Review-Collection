@@ -22,8 +22,7 @@ also be something that I would personally find to be convenient to have.
 - As a user, I want to be able to edit my reviews.
 
 
-## Instructions for Grader
-- Before you can do any of the below, run Main.
+# Instructions for Grader
 - You can generate the first required event related to adding Xs to a Y (which is adding Reviews to a ReviewCollection)
 by first clicking the "Create new review" button that can be found among the buttons at the top of the window. You then
 fill in the text fields to give input for what you would like to be in your review. When you do this, you must enter a 
@@ -35,8 +34,10 @@ added to a ReviewCollection) by first clicking the "Delete one of your reviews" 
 buttons at the top of the window. You then find the review title of the review that you would like to delete from the 
 review collection in the shown list (scrolling to find it you need to) and then click on that review title to select it.
 The delete button should light up when a review title has been selected, and you then click it to delete the review.
-- You can locate my visual component by seeing the image displayed in the middle of the window right after the app has 
-launched.
+- You can locate my visual component by seeing the image displayed in the middle of the app after it launches. Another
+one of the visual components can be found by following the instructions that detail how to add a Review to the
+ReviewCollection (found in the first bullet point), and at the end of the process the app displays an image along with 
+the confirmation that the review has been created.
 - You can save the state of my application by clicking the "Save collection" button that can be found among the buttons
 at the top of the window.
 - You can save the state of my application by clicking the "Load collection" button that can be found among the buttons
