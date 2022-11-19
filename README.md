@@ -30,7 +30,7 @@ review title and must enter an integer between 0 and 10 for the rating in order 
 review. The other text fields can be left blank or filled in as desired. When you are done filling out the information,
 click the "Create" button to create the review and add it to the review collection.
 - You can generate the second required event related to adding Xs to a Y (which is removing Reviews that were previously
-added to a ReviewCollection) by first clicking the "Delete one of your reviews" button that can be found among the 
+added to a ReviewCollection) by first clicking the "Delete a review" button that can be found among the 
 buttons at the top of the window. You then find the review title of the review that you would like to delete from the 
 review collection in the shown list (scrolling to find it you need to) and then click on that review title to select it.
 The delete button should light up when a review title has been selected, and you then click it to delete the review.
