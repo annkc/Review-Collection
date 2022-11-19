@@ -28,16 +28,17 @@ by first clicking the "Create new review" button that can be found among the but
 fill in the text fields to give input for what you would like to be in your review. When you do this, you must enter a 
 review title and must enter an integer between 0 and 10 for the rating in order for the app to allow you to create the 
 review. The other text fields can be left blank or filled in as desired. When you are done filling out the information,
-click the "Create" button to create the review and add it to the review collection.
+click the "Create" button to create the review and add it to the review collection. The list of added reviews can be 
+viewed by clicking the "View all reviews" button that can be found among the buttons at the top of the window.
 - You can generate the second required event related to adding Xs to a Y (which is removing Reviews that were previously
 added to a ReviewCollection) by first clicking the "Delete a review" button that can be found among the 
 buttons at the top of the window. You then find the review title of the review that you would like to delete from the 
 review collection in the shown list (scrolling to find it you need to) and then click on that review title to select it.
 The delete button should light up when a review title has been selected, and you then click it to delete the review.
 - You can locate my visual component by seeing the image displayed in the middle of the app after it launches. Another
-one of the visual components can be found by following the instructions that detail how to add a Review to the
-ReviewCollection (found in the first bullet point), and at the end of the process the app displays an image along with 
-the confirmation that the review has been created.
+one of the visual components can be found by following the instructions that detail how to add a review to the
+review collection (found in the first bullet point), and at the end of the process the app displays an image as 
+confirmation that the review creation was successful.
 - You can save the state of my application by clicking the "Save collection" button that can be found among the buttons
 at the top of the window.
 - You can save the state of my application by clicking the "Load collection" button that can be found among the buttons
