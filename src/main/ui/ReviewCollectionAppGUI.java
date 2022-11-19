@@ -321,12 +321,8 @@ public class ReviewCollectionAppGUI extends JFrame {
         currentChooseButton.setEnabled(false);
         reviewList.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
-                if (e.getValueIsAdjusting() == false) {
-                    if (reviewList.getSelectedIndex() == -1) {
-                        currentChooseButton.setEnabled(false);
-                    } else {
-                        currentChooseButton.setEnabled(true);
-                    }
+                if (!e.getValueIsAdjusting()) {
+                    currentChooseButton.setEnabled(!(reviewList.getSelectedIndex() == -1));
                 }
             }
         });
