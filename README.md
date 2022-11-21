@@ -41,5 +41,5 @@ review collection (found in the first bullet point), and at the end of the proce
 confirmation that the review creation was successful.
 - You can save the state of my application by clicking the "Save collection" button that can be found among the buttons
 at the top of the window.
-- You can save the state of my application by clicking the "Load collection" button that can be found among the buttons
+- You can reload the state of my application by clicking the "Load collection" button that can be found among the buttons
 at the top of the window.
