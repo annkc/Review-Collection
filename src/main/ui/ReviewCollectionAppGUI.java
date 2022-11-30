@@ -1,5 +1,7 @@
 package ui;
 
+import model.Event;
+import model.EventLog;
 import model.Review;
 import model.ReviewCollection;
 import persistence.JsonReader;
@@ -13,6 +15,8 @@ import javax.swing.text.JTextComponent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -69,9 +73,7 @@ public class ReviewCollectionAppGUI extends JFrame {
         setLayout(new BorderLayout());
         setMinimumSize(new Dimension(WIDTH, HEIGHT));
 
-        thonkImage = new ImageIcon(".\\data\\thonkEmoji.png");
-        createdImage = new ImageIcon(".\\data\\reviewCreatedImage.png");
-        deletedImage = new ImageIcon(".\\data\\reviewDeletedImage.png");
+        setUpImages();
         middleLabel = new JLabel(thonkImage);
         add(middleLabel);
         currentMiddle = middleLabel;
@@ -79,6 +81,13 @@ public class ReviewCollectionAppGUI extends JFrame {
 
         setUpButtonsSection();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                for (Event event : EventLog.getInstance()) {
+                    System.out.println(event.getDate() + "\n" + event.getDescription() + "\n");
+                }
+            }
+        });
         setLocationRelativeTo(null);
         setVisible(true);
         pack();
@@ -97,6 +106,14 @@ public class ReviewCollectionAppGUI extends JFrame {
         setUpCreateButton();
         setUpViewButton();
         setUpDeleteButton();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: initializes the images
+    private void setUpImages() {
+        thonkImage = new ImageIcon(".\\data\\thonkEmoji.png");
+        createdImage = new ImageIcon(".\\data\\reviewCreatedImage.png");
+        deletedImage = new ImageIcon(".\\data\\reviewDeletedImage.png");
     }
 
 
