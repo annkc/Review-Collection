@@ -26,18 +26,22 @@ public class ReviewCollection implements WritableToJson {
     /*
      * MODIFIES: this
      * EFFECTS: adds a review at the end of the list of reviews in the collection
+     *          and logs the addition of the review
      */
     public void addReview(Review review) {
         collection.add(review);
+        EventLog.getInstance().logEvent(new Event("Review added to review collection."));
     }
 
     /*
      * REQUIRES: review must be a review in the collection
      * MODIFIES: this
      * EFFECTS: removes review from the collection
+     *          and logs the removal of the review
      */
     public void removeReview(Review review) {
         collection.remove(review);
+        EventLog.getInstance().logEvent(new Event("Review removed from review collection."));
     }
 
     /*

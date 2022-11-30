@@ -43,3 +43,5 @@ confirmation that the review creation was successful.
 at the top of the window.
 - You can reload the state of my application by clicking the "Load collection" button that can be found among the buttons
 at the top of the window.
+
+# Phase 4: Task 2
