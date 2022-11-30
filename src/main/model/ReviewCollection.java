@@ -9,7 +9,10 @@ import java.util.ArrayList;
 /*
  * Represents a collection of an arbitrary number of reviews.
  *
- * (Referenced the WorkRoom class in the JsonSerializationDemo project)
+ * (Referenced WorkRoom class in https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+ *      toJsonObject() is modeled after toJson()
+ *      collectionReviewsToJsonArray() is modeled after thingiesToJson()
+ * )
  */
 
 public class ReviewCollection implements WritableToJson {

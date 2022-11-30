@@ -12,7 +12,8 @@ import java.nio.file.Paths;
 import java.util.stream.Stream;
 
 // Represents a reader that reads JSON data on file for review collection
-// (Referenced the JsonReader class in the JsonSerializationDemo project)
+// (Modeled after the JsonReader class in https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+//  and adjusted to read Reviews and ReviewCollections instead)
 public class JsonReader {
 
     private String sourceFilePath;

@@ -11,7 +11,10 @@ import java.util.ArrayList;
  * reviewed, the creators of the work, the title of the review, the body text
  * of the review, and a rating score out of 10.
  *
- * (Referenced the WorkRoom class in the JsonSerializationDemo project)
+ * (Referenced WorkRoom class in https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+ *      toJsonObject() is modeled after toJson()
+ *      workCreatorsToJsonArray() and reviewTextToJsonArray() are modeled after thingiesToJson()
+ * )
  */
 
 public class Review implements WritableToJson {

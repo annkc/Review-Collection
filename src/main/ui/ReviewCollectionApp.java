@@ -13,8 +13,12 @@ import java.util.Scanner;
 /*
  * Represents the review collection application with command-line interface.
  *
- * (Referenced TellerApp class in the TellerApp project)
- * (Referenced the WorkRoomApp Class in the JsonSerializationDemo project)
+ * (Referenced TellerApp class in https://github.students.cs.ubc.ca/CPSC210/TellerApp
+ *  not including saveReviewCollection() and loadReviewCollection())
+ * (Referenced the WorkRoomApp Class in https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+ *      saveReviewCollection() is modeled after saveWorkRoom()
+ *      loadReviewCollection() is modeled after loadWorkRoom()
+ * )
  */
 
 public class ReviewCollectionApp {

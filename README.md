@@ -58,6 +58,7 @@ Review added to review collection.
 Wed Nov 30 11:27:01 PST 2022
 Review removed from review collection.
 
+
 - (Note: When loading from file, the addition of each of the loaded reviews appears as a 'review added' entry in the 
-event log. Likewise, the removal of the existing reviews that are removed due to the loading will each appear as a
-'review removed' entry in the event log.)
+event log. Likewise, the removal of the existing reviews that are removed when the loading from file takes place will 
+each appear as a 'review removed' entry in the event log.)
