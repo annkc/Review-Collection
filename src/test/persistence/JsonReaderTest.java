@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 // Unit tests for JsonReader
 
-// (Referenced the JsonReaderTest class in the JsonSerializationDemo project)
+// (Referenced JsonReaderTest in https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo)
 
 public class JsonReaderTest {
 

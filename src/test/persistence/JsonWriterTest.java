@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 // Unit tests for JsonWriter
 
-// (Referenced the JsonWriterTest class in the JsonSerializationDemo project)
+// (Referenced JsonWriterTest in https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo)
 
 public class JsonWriterTest {
 
