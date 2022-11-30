@@ -30,7 +30,7 @@ public class ReviewCollection implements WritableToJson {
      */
     public void addReview(Review review) {
         collection.add(review);
-        EventLog.getInstance().logEvent(new Event("Review added to review collection."));
+        EventLog.getInstance().logEvent(new Event("Review '" + review.getReviewTitle() + "' added to collection."));
     }
 
     /*
@@ -41,7 +41,7 @@ public class ReviewCollection implements WritableToJson {
      */
     public void removeReview(Review review) {
         collection.remove(review);
-        EventLog.getInstance().logEvent(new Event("Review removed from review collection."));
+        EventLog.getInstance().logEvent(new Event("Review '" + review.getReviewTitle() + "' removed from collection."));
     }
 
     /*
