@@ -5,6 +5,8 @@ import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 // Unit tests for ReviewCollection
@@ -30,6 +32,14 @@ public class ReviewCollectionTest {
 
         collection.removeReview(review2);
         assertEquals(0, collection.getReviewTitlesList().size());
+
+        ArrayList<Event> events = new ArrayList<>();
+        for (Event event : EventLog.getInstance()) {
+            events.add(event);
+        }
+
+        assertEquals("Review 'Persona 5' added to collection.", events.get(0).getDescription());
+        assertEquals("Review 'Persona 5' removed from collection.", events.get(1).getDescription());
     }
 
     @Test
