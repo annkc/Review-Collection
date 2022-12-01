@@ -41,8 +41,8 @@ review collection (found in the first bullet point), and at the end of the proce
 confirmation that the review creation was successful.
 - You can save the state of my application by clicking the "Save collection" button that can be found among the buttons
 at the top of the window.
-- You can reload the state of my application by clicking the "Load collection" button that can be found among the buttons
-at the top of the window.
+- You can reload the state of my application by clicking the "Load collection" button that can be found among the 
+buttons at the top of the window.
 
 
 # Phase 4: Task 2
@@ -61,3 +61,30 @@ Review 'The game I have wanted to play' removed from collection.</p>
 
 - (Note: When loading from file, the addition of each of the reviews being loaded in appears as a 'review added' entry 
 in the event log.)
+
+
+# Phase 4: Task 3
+
+- Creating an abstract class that the two UI classes, ReviewCollectionApp and ReviewCollectionAppGUI, can extend. This 
+is because each have the methods saveReviewCollection() and loadReviewCollection(), and they are almost completely 
+identical, save for the fact that the return type is void in the console-based class and String in the GUI one. To have 
+the methods match, the return type would have to be String, with the method returning the String that is to either be 
+printed to the console or displayed in the GUI. This solves the problem of the differing ways implementations of 
+displaying the String. Once this is done, these two methods can be put in the aforementioned abstract class instead for 
+the classes to inherit. These two classes also both have a ReviewCollection field, a JsonReader field, and a JsonWriter 
+field each. These fields can be made protected fields in the abstract class. The abstract class can also include
+abstract methods for creating a review, choosing a review, removing a review, and viewing a review, as these are the 
+features that both classes share but implement differently. These are also features that should be required of any 
+review collection app. This abstract class can also be extended by any future
+- Using a JFrame field in the GUI class instead of the class itself extending JFrame. This would be a switch from
+inheritance to composition, which should reduce coupling. This would not tie the GUI to JFrame as strongly if future 
+changes result in moving away from JFrame. As a class can only extend one other class, not extending JFrame would allow
+the class to extend the abstract class mentioned in the previous bullet point.
+- Using more than one class for the GUI, separating it into at least 2 separate classes. This would be following the
+Single Responsibility Principle. The first separation that comes to mind would be having the existing class be 
+responsible for the buttons that are always present at the top of the window that allows the user to choose what to do. 
+There would then be a new class that would be responsible for what would be displayed in the middle of the window, such
+as the feedback messages, the review creation form, and the interactive list. This could be broken down more with one
+class for the review creation form and then one for the list where the user can select a review. The middle display
+class would have one of each of those two classes as fields, and then the class that I started off with would have a
+field of the middle display class. This should increase cohesion.
