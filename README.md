@@ -44,21 +44,20 @@ at the top of the window.
 - You can reload the state of my application by clicking the "Load collection" button that can be found among the buttons
 at the top of the window.
 
+
 # Phase 4: Task 2
 
 Wed Nov 30 11:26:46 PST 2022
-Review added to review collection.
+Review 'The Great Gatsby left me wondering why I read it.' added to collection.
 
 Wed Nov 30 11:26:46 PST 2022
-Review added to review collection.
+Review 'The game I have wanted to play' added to collection.
 
 Wed Nov 30 11:26:55 PST 2022
-Review added to review collection.
+Review 'My favourite book' added to collection.
 
 Wed Nov 30 11:27:01 PST 2022
-Review removed from review collection.
+Review 'The game I have wanted to play' removed from collection.
 
-
-- (Note: When loading from file, the addition of each of the loaded reviews appears as a 'review added' entry in the 
-event log. Likewise, the removal of the existing reviews that are removed when the loading from file takes place will 
-each appear as a 'review removed' entry in the event log.)
+- (Note: When loading from file, the addition of each of the reviews being loaded in appears as a 'review added' entry 
+in the event log.)
