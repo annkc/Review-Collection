@@ -47,17 +47,17 @@ at the top of the window.
 
 # Phase 4: Task 2
 
-Wed Nov 30 11:26:46 PST 2022
-Review 'The Great Gatsby left me wondering why I read it.' added to collection.
+<p>Wed Nov 30 11:26:46 PST 2022<br>
+Review 'The Great Gatsby left me wondering why I read it.' added to collection.</p>
 
-Wed Nov 30 11:26:46 PST 2022
-Review 'The game I have wanted to play' added to collection.
+<p>Wed Nov 30 11:26:46 PST 2022<br>
+Review 'The game I have wanted to play' added to collection.</p>
 
-Wed Nov 30 11:26:55 PST 2022
-Review 'My favourite book' added to collection.
+<p>Wed Nov 30 11:26:55 PST 2022<br>
+Review 'My favourite book' added to collection.</p>
 
-Wed Nov 30 11:27:01 PST 2022
-Review 'The game I have wanted to play' removed from collection.
+<p>Wed Nov 30 11:27:01 PST 2022<br>
+Review 'The game I have wanted to play' removed from collection.</p>
 
 - (Note: When loading from file, the addition of each of the reviews being loaded in appears as a 'review added' entry 
 in the event log.)
