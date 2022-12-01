@@ -26,6 +26,8 @@ public class ReviewCollectionTest {
 
     @Test
     public void testAddingThenRemovingAReview() {
+        EventLog.getInstance().clear();
+
         collection.addReview(review2);
         assertEquals(review2, collection.getReviewAt(0));
         assertEquals(1, collection.getReviewTitlesList().size());
@@ -38,8 +40,9 @@ public class ReviewCollectionTest {
             events.add(event);
         }
 
-        assertEquals("Review 'Persona 5' added to collection.", events.get(0).getDescription());
-        assertEquals("Review 'Persona 5' removed from collection.", events.get(1).getDescription());
+        assertEquals("Event log cleared.", events.get(0).getDescription());
+        assertEquals("Review 'The game I have wanted to play' added to collection.", events.get(1).getDescription());
+        assertEquals("Review 'The game I have wanted to play' removed from collection.", events.get(2).getDescription());
     }
 
     @Test
