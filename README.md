@@ -75,16 +75,19 @@ the classes to inherit. These two classes also both have a ReviewCollection fiel
 field each. These fields can be made protected fields in the abstract class. The abstract class can also include
 abstract methods for creating a review, choosing a review, removing a review, and viewing a review, as these are the 
 features that both classes share but implement differently. These are also features that should be required of any 
-review collection app. This abstract class can also be extended by any future
+review collection app. This abstract class would also be available to be extended by any future ui classes. The abstract
+class could be named ReviewCollectionApp, while the existing ReviewCollectionApp class could be renamed to
+ReviewCollectionAppCLI to match ReviewCollectionAppGUI.
 - Using a JFrame field in the GUI class instead of the class itself extending JFrame. This would be a switch from
 inheritance to composition, which should reduce coupling. This would not tie the GUI to JFrame as strongly if future 
 changes result in moving away from JFrame. As a class can only extend one other class, not extending JFrame would allow
 the class to extend the abstract class mentioned in the previous bullet point.
 - Using more than one class for the GUI, separating it into at least 2 separate classes. This would be following the
-Single Responsibility Principle. The first separation that comes to mind would be having the existing class be 
-responsible for the buttons that are always present at the top of the window that allows the user to choose what to do. 
-There would then be a new class that would be responsible for what would be displayed in the middle of the window, such
-as the feedback messages, the review creation form, and the interactive list. This could be broken down more with one
-class for the review creation form and then one for the list where the user can select a review. The middle display
-class would have one of each of those two classes as fields, and then the class that I started off with would have a
-field of the middle display class. This should increase cohesion.
+Single Responsibility Principle. The first separation that comes to mind would be having the existing class,
+ReviewCollectionAppGUI, be responsible for the buttons that are always present at the top of the window that allows the
+user to choose what to do. There would then be a new class, MiddleDisplayGUI, that would be responsible for what would 
+be displayed in the middle of the window, such as the feedback messages, the review creation form, and the interactive 
+list. This could be broken down more with one class for the review creation form, ReviewCreationFormGUI, and then one 
+for the display with the list and button where the user can select a review, ReviewSelectionScreenGUI. The 
+MiddleDisplayGUI class would have one field each of ReviewCreationFormGUI and ReviewSelectionScreenGUI, and then the
+ReviewCollectionAppGUI class would have a field of MiddleDisplayGUI. This should increase cohesion.
