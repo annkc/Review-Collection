@@ -1,0 +1,10 @@
+{"reviews": [{
+    "review text": [
+        {"paragraph": "This is a sample review!"},
+        {"paragraph": "This is the body text of the review! "}
+    ],
+    "work title": "Review Collection App",
+    "rating": 5,
+    "review title": "Sample Review",
+    "work creators": [{"name": "AC"}]
+}]}

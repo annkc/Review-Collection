@@ -59,8 +59,8 @@ Review 'My favourite book' added to collection.</p>
 <p>Wed Nov 30 11:27:01 PST 2022<br>
 Review 'The game I have wanted to play' removed from collection.</p>
 
-- (Note: When loading from file, the addition of each of the reviews being loaded in appears in the event log as an 
-entry of a review being added.)
+- (Note: When loading from file, the addition of each of the reviews being loaded in will appear in the event log as an 
+entry of a review being added to the collection.)
 
 
 # Phase 4: Task 3
